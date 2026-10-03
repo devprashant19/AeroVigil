@@ -198,6 +198,7 @@ export function DeviceShell(): React.JSX.Element {
                   key={run}
                   ref={frame}
                   title="AeroVigil Air app"
+                  allow="camera; geolocation; accelerometer; gyroscope; magnetometer"
                   src="?embed#/"
                   width={g.appWidth}
                   height={g.appHeight}
