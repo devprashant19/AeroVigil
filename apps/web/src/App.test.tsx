@@ -22,7 +22,7 @@ describe('the frame around every screen', () => {
     const dock = document.querySelector<HTMLElement>('.dock');
     if (dock === null) throw new Error('no dock');
     expect(within(dock).getByRole('button', { name: /Relatable measure/u })).toBeInTheDocument();
-    expect(within(dock).getByRole('button', { name: 'Ask AeroVigil' })).toBeInTheDocument();
+    expect(within(dock).getByRole('button', { name: 'AeroVigil assistant' })).toBeInTheDocument();
     await userEvent.click(screen.getByRole('link', { name: 'Exposure' }));
     expect(document.querySelector('.dock')).toBeInTheDocument();
   });
