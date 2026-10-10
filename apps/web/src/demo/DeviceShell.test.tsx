@@ -18,7 +18,7 @@ afterEach(() => {
   vi.unstubAllEnvs();
 });
 
-const appFrame = (): HTMLIFrameElement => screen.getByTitle('AeroVigil Air app');
+const appFrame = (): HTMLIFrameElement => screen.getByTitle('AeroVigil app');
 
 describe('the prototype shell', () => {
   it('opens on an iPhone with the app inside a frame, and says the air is made up', () => {
