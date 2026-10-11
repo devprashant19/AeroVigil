@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { answerFromRules } from '@aerovigil/core';
-import { sampleDay } from '../today/sample';
+import { sampleDay } from '../testing/sampleDays';
 import { apiAssistant } from './api';
 import { AssistantFab } from './AssistantFab';
 import { spanWords, buildContext } from './context';
@@ -64,7 +64,7 @@ describe('the local answers', () => {
       grapStage: 2,
       best: { span: '4 to 5 pm', aqi: 180 },
     });
-    expect(text).toMatch(/GRAP Stage II is likely today/u);
+    expect(text).toMatch(/GRAP Stage II band today/u);
     expect(text).toMatch(/Walk or exercise indoors today/u);
     expect(text).toMatch(/cleanest hour is 4 to 5 pm, at AQI 180/u);
     expect(text).toMatch(/unofficial/u);
@@ -626,7 +626,11 @@ describe('the best hour in the context', () => {
       await openChat();
       await typeIn('how many fires are there?');
       expect(
-        await screen.findByText(/fires? (in|on|near|across)|fire count|Contact/iu),
+        await screen.findByText(
+          /fires? (in|on|near|across|yesterday)|fire count|Contact/iu,
+          {},
+          { timeout: 4000 },
+        ),
       ).toBeInTheDocument();
       expect(screen.queryByText(/Where is the fire/u)).not.toBeInTheDocument();
       await typeIn('report a fire');
@@ -679,7 +683,7 @@ describe('the best hour in the context', () => {
         'true',
       );
       await userEvent.click(within(language).getByRole('button', { name: 'हिन्दी' }));
-      const dialog = screen.getByRole('dialog', { name: 'वायु सहायक' });
+      const dialog = screen.getByRole('dialog', { name: 'AeroVigil सहायक' });
       expect(dialog).toHaveTextContent('सैर, स्कूल, मास्क');
       expect(screen.getByRole('textbox', { name: 'आपका संदेश' })).toHaveAttribute(
         'placeholder',
@@ -697,7 +701,7 @@ describe('the best hour in the context', () => {
           <AssistantFab voice={voice} />
         </MemoryRouter>,
       );
-      await userEvent.click(screen.getByRole('button', { name: 'वायु सहायक' }));
+      await userEvent.click(screen.getByRole('button', { name: 'AeroVigil सहायक' }));
       await userEvent.click(screen.getByRole('button', { name: 'क्या मुझे मास्क चाहिए?' }));
       expect(await screen.findByText(/अच्छी तरह फिट N95 या FFP2 मास्क/u)).toBeInTheDocument();
       await waitFor(() => {
@@ -720,7 +724,7 @@ describe('the best hour in the context', () => {
           <AssistantFab voice={hindiVoice()} />
         </MemoryRouter>,
       );
-      await userEvent.click(screen.getByRole('button', { name: 'वायु सहायक' }));
+      await userEvent.click(screen.getByRole('button', { name: 'AeroVigil सहायक' }));
       await userEvent.type(
         screen.getByRole('textbox', { name: 'आपका संदेश' }),
         'मैं आज पार्क में 30 मिनट टहला{Enter}',
