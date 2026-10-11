@@ -67,7 +67,7 @@ describe('the prototype shell', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Laptop' }));
     expect(screen.queryByText('5:30 pm')).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Reload the app' })).toBeInTheDocument();
-    expect(screen.getByText(/aerovigilair\.in/u)).toBeInTheDocument();
+    expect(screen.getByText(/aerovigil/u)).toBeInTheDocument();
   });
 
   it('starts over: forgets saved places and reloads the app', async () => {
