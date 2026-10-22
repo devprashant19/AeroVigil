@@ -16,7 +16,7 @@ AeroVigil answers for _one place_. Home, near R K Puram: **US AQI 500** (the top
 - **Code decides, AI only words.** Fixed rules decide the advice. The model may reword it, and every number in its wording is checked against the facts, or the plain text goes out.
 - **It reaches into your room.** A small measuring unit (an ESP32-S3 and a laser particle sensor, over Bluetooth) puts your room's air beside the air outside.
 
-Code for a Billion Bharat Hackathon submission, August to November 2026. Built alone.
+Code for a Billion Bharat Hackathon submission, August to November 2026. Built solo, with AgentFoundry as a coding assistant (see [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md)).
 
 ## Try it in two minutes
 
@@ -193,7 +193,7 @@ The stack deploys with `cd infra && npx cdk deploy`. It needs three secrets made
 
 ## AI in the app
 
-At run time, Amazon Bedrock (Nova Micro, behind a guardrail) rewords the assistant's answers, or answers from the facts it is given, and cannot act ([`docs/AGENT-BOUNDARIES.md`](docs/AGENT-BOUNDARIES.md)). I am the only author ([`CONTRIBUTIONS.md`](CONTRIBUTIONS.md)).
+At run time, Amazon Bedrock (Nova Micro, behind a guardrail) rewords the assistant's answers, or answers from the facts it is given, and cannot act ([`docs/AGENT-BOUNDARIES.md`](docs/AGENT-BOUNDARIES.md)). At build time I used AgentFoundry (through AgentFoundry (AF)) as a coding assistant; I directed and reviewed every change ([`CONTRIBUTIONS.md`](CONTRIBUTIONS.md)).
 
 ## Licence
 
