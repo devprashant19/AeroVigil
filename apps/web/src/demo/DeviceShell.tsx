@@ -64,7 +64,7 @@ function BrowserBar({
         <span className="traffic">
           <i /> <i /> <i />
         </span>
-        <span className="tab">AeroVigil Air</span>
+        <span className="tab">AeroVigil</span>
       </div>
       <div className="browser-address">
         <button type="button" aria-label="Back" onClick={onBack}>
@@ -163,7 +163,7 @@ export function DeviceShell(): React.JSX.Element {
     <div className="shell">
       <header className="shell-bar">
         <div>
-          <strong className="shell-name">AeroVigil Air</strong>
+          <strong className="shell-name">AeroVigil</strong>
           <span className="muted small">
             {' '}
             Prototype. The air is made up; the screens are the real app.
@@ -283,7 +283,7 @@ export function DeviceShell(): React.JSX.Element {
                 <iframe
                   key={run}
                   ref={frame}
-                  title="AeroVigil Air app"
+                  title="AeroVigil app"
                   allow="camera; geolocation; accelerometer; gyroscope; magnetometer"
                   src={`?embed#${route}`}
                   width={g.appWidth}

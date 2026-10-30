@@ -1,4 +1,4 @@
-# AeroVigil Air: design brief (version 2)
+# AeroVigil: design brief (version 2)
 
 One page plus a table. Every screen follows it. If something here is wrong, change it here first.
 
