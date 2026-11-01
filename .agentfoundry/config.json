@@ -1,0 +1,65 @@
+{
+  "$schema": "https://agentfoundry.me/schemas/project-v1.json",
+  "projectId": "af-aerovigil-bharat-2026",
+  "name": "AeroVigil",
+  "description": "Hyperlocal Air Quality Intelligence & Digital Twin Care-Coordination for Bharat",
+  "hackathon": {
+    "name": "Code for a Billion: Bharat Agentic-AI Hackathon 2026",
+    "track": "Climate / Clean Air (Track 04) & Health (Track 06)",
+    "officialIde": "AgentFoundry",
+    "idePortal": "https://agentfoundry.me",
+    "allocatedSmartCodeTokens": 1000000,
+    "team": [
+      {
+        "name": "Dev Prashant",
+        "github": "devprashant19",
+        "email": "dev.prashant1901@gmail.com",
+        "role": "Lead Architect & Full-Stack System Engineer"
+      },
+      {
+        "name": "Puneet Yadav",
+        "github": "puneetnith28",
+        "email": "puneetnith28@gmail.com",
+        "role": "Systems Engineer, Hardware Firmware & Data Pipelines"
+      }
+    ]
+  },
+  "agentSwarm": [
+    {
+      "id": "agent-sensor-ingestion",
+      "name": "SensorIngestionAgent",
+      "model": "af-smartcode-orchestrator",
+      "role": "Validates real-time CPCB, DPCC, OpenAQ, and Open-Meteo telemetry streams against strict Zod contracts (rule I2)."
+    },
+    {
+      "id": "agent-dispersion-forecast",
+      "name": "DispersionForecastAgent",
+      "model": "af-deep-reasoning",
+      "role": "Synthesizes atmospheric dispersion models, MET Norway wind vectors, and NASA FIRMS stubble fire hotspots."
+    },
+    {
+      "id": "agent-carehub-coordination",
+      "name": "CareHubCoordinationAgent",
+      "model": "af-clinical-router",
+      "role": "Translates cumulative particulate exposure into ICMR clinical triggers and syncs patient digital twins via xSpan CareHub."
+    },
+    {
+      "id": "agent-guardrail-validator",
+      "name": "GuardrailValidatorAgent",
+      "model": "af-code-sentry",
+      "role": "Enforces mathematical invariance: deterministic rules decide, LLMs only reword, refusing hallucinated figures."
+    }
+  ],
+  "verification": {
+    "testRunner": "vitest",
+    "bundleChecker": "make prove",
+    "safetyAudit": "docs/safety.md"
+  },
+  "partnerIntegrations": {
+    "xSpanCareHub": {
+      "endpoint": "https://api.carehub.xspan.in/v1",
+      "authType": "ABDM-FHIR-Token",
+      "modules": ["DigitalTwinSync", "AshaCareDispatch", "ICMRClinicalAdvisory"]
+    }
+  }
+}

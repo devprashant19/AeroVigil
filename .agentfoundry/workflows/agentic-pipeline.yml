@@ -1,0 +1,53 @@
+# AgentFoundry Multi-Agent Orchestration Pipeline
+# Project: AeroVigil (Code for a Billion 2026)
+version: '1.0'
+name: aerovigil-bharat-pipeline
+
+environment:
+  ide: AgentFoundry
+  token_budget: 1000000
+  target_cloud: AWS
+  region: ap-south-1
+
+stages:
+  - id: stage-ingestion
+    name: Telemetry Ingestion & Contract Validation
+    agent: SensorIngestionAgent
+    inputs:
+      - openaq_cpcb_feed
+      - open_meteo_cams
+      - nasa_firms_viirs
+    validation:
+      contract: packages/contracts/src/schemas.ts
+      rule: rule_I2_provenance_freshness
+
+  - id: stage-dispersion
+    name: Wind Vector & Fire Plume Modeling
+    agent: DispersionForecastAgent
+    depends_on: [stage-ingestion]
+    inputs:
+      - met_norway_wind
+      - firms_fire_centroids
+    outputs:
+      - dispersion_grid_delhi_ncr
+
+  - id: stage-clinical-triage
+    name: xSpan CareHub Digital Twin Evaluation
+    agent: CareHubCoordinationAgent
+    depends_on: [stage-dispersion]
+    inputs:
+      - patient_vulnerabilities (pediatric_asthma, copd, geriatric)
+      - cumulative_exposure_mg
+    actions:
+      - sync_xspan_digital_twin: packages/core/src/carehub.ts
+      - dispatch_asha_alerts: priority_urgent_or_emergency
+
+  - id: stage-guardrail-enforcement
+    name: Deterministic Safety & Invariant Verification
+    agent: GuardrailValidatorAgent
+    depends_on: [stage-clinical-triage]
+    gates:
+      - command: npm test
+      - command: make prove
+      - rule: rule_I1_no_lookahead_past_8am
+      - rule: rule_I3_code_decides_ai_only_words
