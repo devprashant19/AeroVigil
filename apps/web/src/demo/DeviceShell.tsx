@@ -77,7 +77,7 @@ function BrowserBar({
           <RotateCw size={16} />
         </button>
         <span className="url" aria-hidden="true">
-          <Lock size={13} /> aerovigilair.in
+          <Lock size={13} /> aerovigil
         </span>
       </div>
     </div>
