@@ -127,7 +127,7 @@ export const WORDS: Readonly<Record<Lang, Words>> = {
     languageHindi: 'हिन्दी',
   },
   hi: {
-    title: 'वायु सहायक',
+    title: 'AeroVigil सहायक',
     languageLabel: 'भाषा',
     sampleNote: 'जवाब नकली हवा के आँकड़ों पर, तय नियमों से बने हैं।',
     liveNote:
@@ -156,7 +156,7 @@ export const WORDS: Readonly<Record<Lang, Words>> = {
     cancel: 'रद्द करें',
     listen: 'सुनें',
     checking: 'आसपास के मॉनिटर देख रहा हूँ…',
-    ctaTitle: 'अपने स्कूल, सोसाइटी या घर में वायु चाहिए?',
+    ctaTitle: 'अपने स्कूल, सोसाइटी या घर में AeroVigil चाहिए?',
     ctaNote: 'डेमो माँगें, या अपनी जगह पर एयर मॉनिटर माँगें।',
     request: 'अनुरोध',
     quickAnswers: 'जल्दी जवाब',
