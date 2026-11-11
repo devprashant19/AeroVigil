@@ -179,3 +179,4 @@ aws ssm put-parameter --name "/aerovigil/watch/sends-enabled" --value "false" --
 - **Primary Email:** dev.prashant1901@gmail.com
 - **Repository:** https://github.com/devprashant19/aerovigil
 - **License:** Open source dual-license under Apache 2.0 / MIT as detailed in `LICENSE`.
+

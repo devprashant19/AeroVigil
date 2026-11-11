@@ -21,3 +21,4 @@ If you discover a security vulnerability in AeroVigil (including AWS CDK infrast
    - Exact steps or minimal proof of concept to reproduce.
    - Assessment of impact on system integrity, privacy, or AWS infrastructure costs.
 4. You will receive an acknowledgment within 24 hours. Validated vulnerabilities will be remediated and released promptly under a coordinated disclosure schedule.
+
