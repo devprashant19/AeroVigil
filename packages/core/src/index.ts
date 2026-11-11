@@ -16,3 +16,4 @@ export * from './roomVerdict';
 export * from './assistantRules';
 export * from './walkAdvice';
 export * from './assistantRulesHi';
+export * from './carehub';
