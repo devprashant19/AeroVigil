@@ -75,6 +75,6 @@ describe('a unit’s Bluetooth packet', () => {
   });
 
   it('advertises a name every unit shares, so the app can find them', () => {
-    expect(UNIT_NAME_PREFIX).toBe('AeroVigil-');
+    expect(UNIT_NAME_PREFIX).toBe('Aero-');
   });
 });

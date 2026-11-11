@@ -9,7 +9,7 @@ Replayed at 8 am, AeroVigil says: avoid going out, and wear a well-fitted N95 if
 ![Home on the recorded morning after Diwali: AQI 500, PM2.5 980 µg/m³, the Lodhi Road monitor at 3.8 km "as recorded", and the advice for this place](images/02b-place-insights-desktop.png)
 _The recorded morning after Diwali, 21 Oct 2025, 8 am. The alert says the air at this place is in the GRAP Stage IV band. That is my estimate from the last 24 hours at this monitor. The card says the official order comes first, and it was Stage II._
 
-It is free and live: https://d3sqz5i7m8h3wk.cloudfront.net. Press **Try without login** to play that morning yourself.
+It is free and live: https://<YOUR_DISTRIBUTION>.cloudfront.net. Press **Try without login** to play that morning yourself.
 
 ## The idea
 
@@ -157,4 +157,4 @@ About AWS: Bedrock in Mumbai needs an inference profile and a two-ARN policy, an
 
 Beyond AWS: keep the model's job small, and read your own screenshots as a stranger would. A number can be right and the sentence beside it wrong.
 
-Try it: https://d3sqz5i7m8h3wk.cloudfront.net · Seven recorded days: https://d3sqz5i7m8h3wk.cloudfront.net/#/week · Code: https://github.com/devprashant19/aerovigil
+Try it: https://<YOUR_DISTRIBUTION>.cloudfront.net · Seven recorded days: https://<YOUR_DISTRIBUTION>.cloudfront.net/#/week · Code: https://github.com/devprashant19/aerovigil

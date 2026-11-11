@@ -7,8 +7,8 @@
 /** The unit's one service, and the characteristic its readings arrive on. */
 export const UNIT_SERVICE_UUID = 'b7c5a1f0-6a7e-4c1b-9b6d-5a1d76617975';
 export const UNIT_READING_UUID = 'b7c5a1f1-6a7e-4c1b-9b6d-5a1d76617975';
-/** The name every unit advertises, followed by the last four digits of its address: "AeroVigil-3F2A". */
-export const UNIT_NAME_PREFIX = 'AeroVigil-';
+/** The name every unit advertises, followed by the last four digits of its address: "Aero-3F2A". */
+export const UNIT_NAME_PREFIX = 'Aero-';
 
 /** The packet is this many bytes, little-endian, so it fits in one default Bluetooth packet (20 bytes). */
 export const PACKET_BYTES = 18;

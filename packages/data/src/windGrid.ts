@@ -156,7 +156,7 @@ export function metNoWindGridRepo(options: MetNoWindGridOptions = {}): WindGridR
   const baseUrl = options.baseUrl ?? 'https://api.met.no/weatherapi/locationforecast/2.0/compact';
   const fetchImpl = options.fetchImpl ?? fetch;
   const userAgent =
-    options.userAgent ?? 'TheAeroVigilProject/0.1 github.com/devprashant19/aerovigil (air quality app)';
+    options.userAgent ?? 'AeroVigil/0.1 github.com/devprashant19/aerovigil (air quality app)';
   const concurrency = Math.max(1, options.concurrency ?? 8);
   const fetchAll = async (): Promise<readonly WindPoint[]> => {
     const wanted = metNoWindPoints();

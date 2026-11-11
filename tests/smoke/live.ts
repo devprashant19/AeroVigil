@@ -20,10 +20,12 @@ import {
   checkToday,
 } from './invariants';
 
-const BASE = (process.argv[2] ?? 'https://niu33luxo8.execute-api.ap-south-1.amazonaws.com').replace(
-  /\/$/,
-  '',
-);
+const targetArg = process.argv[2];
+if (!targetArg) {
+  console.error('Usage: tsx tests/smoke/live.ts <API_BASE_URL>');
+  process.exit(1);
+}
+const BASE = targetArg.replace(/\/$/, '');
 
 const out = (line: string): void => {
   process.stdout.write(`${line}\n`);

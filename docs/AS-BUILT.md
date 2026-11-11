@@ -4,7 +4,7 @@ What the app is today, what is built but switched off, what is not built, and wh
 
 Everything the live app and the recorded days show is real data. Made-up numbers exist only in test fixtures, and `make prove` fails if one reaches the deployed bundle.
 
-## Live at https://d3sqz5i7m8h3wk.cloudfront.net
+## Live at https://<YOUR_DISTRIBUTION>.cloudfront.net
 
 | Part                                | State                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

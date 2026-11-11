@@ -8,7 +8,8 @@ beforeEach(() => {
 });
 
 const answer = (url: string): Response => {
-  const lats = new URL(url).searchParams.get('latitude')?.split(',') ?? [];
+  const parsed = new URL(url, 'https://aerovigil.local');
+  const lats = parsed.searchParams.get('latitude')?.split(',') ?? [];
   if (url.includes('/v1/fires'))
     return new Response(JSON.stringify({ counts: { last24h: 127 } }), { status: 200 });
   // The wind comes from our own API, which gives its grid already worked out.

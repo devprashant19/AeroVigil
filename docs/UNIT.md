@@ -5,7 +5,7 @@ the demo. The cleaner prototype is separate (`PURIFIER.md`): its airflow was mea
 
 **Status (11 Oct):** the firmware `firmware/aerovigil-unit/aerovigil-unit.ino` compiles and runs on an ESP32-S3 (QFN56, with
 Wi-Fi and Bluetooth 5 LE) wired to an SPS30 over UART; the serial monitor shows the sensor's serial number and PM1, PM2.5,
-PM4 and PM10 every two seconds, and the board advertises as `AeroVigil-XXXX`. The live site connected to it over Bluetooth from
+PM4 and PM10 every two seconds, and the board advertises as `Aero-XXXX`. The live site connected to it over Bluetooth from
 Chrome on a Mac and showed the readings. **Not yet done:** connecting from an Android phone, and any comparison with a monitor.
 Nothing in the app claims a measurement it has not received.
 
@@ -23,7 +23,7 @@ Wiring is in the header of the firmware file: SPS30 pin 2 (RX) to GPIO17, pin 3 
 
 ## How it reaches the app
 
-The unit advertises as `AeroVigil-XXXX` (the last four digits of its address) and offers one service with one notify
+The unit advertises as `Aero-XXXX` (the last four digits of its address) and offers one service with one notify
 characteristic. About every two seconds it sends an 18-byte packet (layout in `apps/web/src/devices/unitProtocol.ts`):
 the four particle sizes, temperature and humidity if fitted, and how long it has been on. A packet that is short, from
 another version, flagged as having no reading, or physically impossible (PM2.5 above PM10, or above 1,000 µg/m³) is
@@ -76,7 +76,7 @@ The cleaner prototype is described in `PURIFIER.md`: what was built, the one air
 
 1. Wire the SPS30 and the ESP32 as in the firmware header. Power from USB.
 2. Install the "Sensirion UART SPS30" library, open `firmware/aerovigil-unit/aerovigil-unit.ino`, pick the board "ESP32S3 Dev Module" with USB CDC On Boot enabled, upload. Close the serial monitor first, or the port is busy.
-3. Open the serial monitor at 115200. You should see `Advertising as AeroVigil-XXXX`, then a line of readings every two
+3. Open the serial monitor at 115200. You should see `Advertising as Aero-XXXX`, then a line of readings every two
    seconds. PM2.5 of 0.0 for a few seconds is normal while the fan settles.
 4. On the phone, open the live site in Chrome, press **Add device** at the top right of My Air, choose where the unit is, press **Connect
-   over Bluetooth**, and pick `AeroVigil-XXXX`.
+   over Bluetooth**, and pick `Aero-XXXX`.

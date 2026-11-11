@@ -1,6 +1,9 @@
 # AeroVigil
 
-**One clear answer for the air at the places you care about.**
+**Hyperlocal air intelligence: one clear decision for the air at the places you care about.**
+
+Created and maintained by **Dev Prashant** ([@devprashant19](https://github.com/devprashant19) · [dev.prashant1901@gmail.com](mailto:dev.prashant1901@gmail.com)).  
+Repository: [https://github.com/devprashant19/aerovigil](https://github.com/devprashant19/aerovigil) · Implementation Roadmap: [`docs/IMPLEMENTATION_PLAN.md`](docs/IMPLEMENTATION_PLAN.md)
 
 It is 8 am, the morning after Diwali, in Delhi. The city app says "bad". A parent still has to decide: do we walk to school?
 
@@ -20,7 +23,7 @@ Live: **https://d3sqz5i7m8h3wk.cloudfront.net** (a phone or a laptop; create an 
 - **Code decides, AI only words.** Fixed rules decide the advice. The model may reword it, and every number in its wording is checked against the facts, or the plain text goes out.
 - **It reaches into your room.** A small measuring unit (an ESP32-S3 and a laser particle sensor, over Bluetooth) puts your room's air beside the air outside.
 
-Code for a Billion Bharat Hackathon submission, August to November 2026. Built solo, with AgentFoundry as a coding assistant (see [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md)).
+Built solo by Dev Prashant, with AI assistance as a pair programmer (see [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md)).
 
 ## Try it in two minutes
 
@@ -161,16 +164,16 @@ The stack deploys with `cd infra && npx cdk deploy`. It needs three secrets made
 
 ## Repository map
 
-| Path                 | What                                                                                                                                 |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `apps/web`           | The app (React, MapLibre). `src/air` is where real data enters; `src/week` is the recorded days; `src/devices` is the measuring unit |
-| `apps/api`           | The API Lambda, the stations Lambda and the routes                                                                                   |
-| `packages/contracts` | The shape of every request and answer (zod)                                                                                          |
-| `packages/core`      | The rules: air bands, timeline, windows, verdicts, the assistant's fixed answers (English and Hindi)                                 |
-| `packages/data`      | Clients for OpenAQ, Open-Meteo, MET Norway and FIRMS, and the cache                                                                  |
-| `packages/watch`     | The alert loop, Telegram, Bedrock wording, the number check                                                                          |
-| `infra`              | The CDK stack and its tests                                                                                                          |
-| `firmware/aerovigil-unit` | The ESP32-S3 sketch for the measuring unit                                                                                           |
+| Path                     | What                                                                                                                                 |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `apps/web`               | The app (React, MapLibre). `src/air` is where real data enters; `src/week` is the recorded days; `src/devices` is the measuring unit |
+| `apps/api`               | The API Lambda, the stations Lambda and the routes                                                                                   |
+| `packages/contracts`     | The shape of every request and answer (zod)                                                                                          |
+| `packages/core`          | The rules: air bands, timeline, windows, verdicts, the assistant's fixed answers (English and Hindi)                                 |
+| `packages/data`          | Clients for OpenAQ, Open-Meteo, MET Norway and FIRMS, and the cache                                                                  |
+| `packages/watch`         | The alert loop, Telegram, Bedrock wording, the number check                                                                          |
+| `infra`                  | The CDK stack and its tests                                                                                                          |
+| `firmware/aerovigil-unit`| The ESP32-S3 sketch for the measuring unit                                                                                           |
 | `scripts`            | Build, deploy, check and recording scripts                                                                                           |
 | `tests/smoke`        | The live check                                                                                                                       |
 

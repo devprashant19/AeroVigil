@@ -2,7 +2,7 @@
 
 AeroVigil is one web app and one API, served from one address. The page and the API share a CloudFront address, so the app needs no cross-site settings and a visitor makes one TLS connection.
 
-Live address: https://d3sqz5i7m8h3wk.cloudfront.net. Stack: `AeroVigil`, account 534212416249, `ap-south-1`.
+Live address: https://<YOUR_DISTRIBUTION>.cloudfront.net. Stack: `AeroVigil`, region `ap-south-1`.
 
 ## The picture
 

@@ -110,7 +110,7 @@ void setup() {
 
   // The name ends in four hex digits of the board's own address, so more than one unit can be told apart.
   char name[16];
-  snprintf(name, sizeof(name), "AeroVigil-%04X", (unsigned)((ESP.getEfuseMac() >> 32) & 0xFFFF));
+  snprintf(name, sizeof(name), "Aero-%04X", (unsigned)((ESP.getEfuseMac() >> 32) & 0xFFFF));
   BLEDevice::init(name);
 
   BLEServer* server = BLEDevice::createServer();

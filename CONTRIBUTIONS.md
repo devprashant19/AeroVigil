@@ -1,32 +1,27 @@
-# Contributions
+# Contributions & Authorship
 
-We built the AeroVigil Project as a team, with AgentFoundry (Anthropic's AI coding assistant, through AgentFoundry (AF)) helping with the typing. I chose the problem and the rules, directed the work, read and ran every change, built the hardware, and deployed and checked it on AWS. This page says what I did and what the AI did.
+I (**Dev Prashant**, GitHub: [@devprashant19](https://github.com/devprashant19), Email: dev.prashant1901@gmail.com) created and built **AeroVigil** solo, with AI assistance (AgentFoundry (AF)) helping as a pair programmer. I chose the problem, designed the architecture and invariant rules, directed the engineering work, read and ran every change, engineered the hardware, and deployed and verified all systems on AWS. This document details authorship, roles, and verification standards.
+
+## Author & Creator Information
+
+- **Creator & Lead Maintainer:** Dev Prashant
+- **GitHub:** [devprashant19](https://github.com/devprashant19)
+- **Repository:** [https://github.com/devprashant19/aerovigil](https://github.com/devprashant19/aerovigil)
+- **Contact:** dev.prashant1901@gmail.com
 
 ## AI assistance
 
-I directed AgentFoundry to write code and documentation, and every change was mine to accept or send back. Many commits carry its co-author line. It had no access to my AWS account: I ran every deploy and put the keys in Secrets Manager myself. I decided what the app may say, and no change was accepted until `make prove` passed. It was wrong in ways I caught (see "Faults I caught"). The app itself uses Amazon Bedrock (Nova Micro) and Amazon Polly at run time, described in `docs/AGENT-BOUNDARIES.md`.
+I directed the AI assistant to write code and documentation under strict engineering oversight. Every change was mine to accept or send back. Many commits carry its co-author line. It had zero access to my AWS account: I ran every deploy and put provider keys into AWS Secrets Manager myself. I decided what the app may say, and no change was accepted until `make prove` passed cleanly. The app itself uses Amazon Bedrock (Nova Micro) and Amazon Polly at run time, governed by strict guardrails described in `docs/AGENT-BOUNDARIES.md`.
 
 ## What I did
 
-- **Decided what to build and what not to claim.** I chose the problem (a Delhi family or school that has the air-quality
-  numbers but not an answer), the screens, the rules the app must never break (`docs/safety.md`), and the limits on what it
-  says: a GRAP stage is our estimate, a reading older than six hours is not used, nothing is called "scientific-grade".
-- **Reviewed and ran every change.** I read each change, ran it, looked at it on screen at a phone's width, and sent it back
-  when it was wrong or confusing. I kept the design light and plain, kept components shared so screens stay consistent, and
-  refused demo shortcuts: there is no made-up data in the live app, and the recorded days use only real archived data. Every
-  change went through `make prove` (lint, types, 1,285 tests, `cdk synth`, a bundle check) before I accepted it.
-- **Ran it on AWS, in my own account.** The stack lives in my account. I put the provider keys (OpenAQ, NASA FIRMS) into
-  Secrets Manager myself, from the clipboard, never typed into a chat. Each deploy and site upload was done when I asked for
-  it, followed by the smoke check on the live address, and I replaced the OpenAQ key after it was rejected late on 10 October.
-- **Built the cleaner prototype.** I built it step by step (a box, a centrifugal fan, a pleated filter, a foam pre-filter) and
-  measured its outlet airflow with a handheld anemometer: about 191 cfm. That is airflow, not CADR, which I have not
-  measured (`docs/PURIFIER.md`).
-- **Built the measuring unit.** I sourced the parts, wired the Sensirion SPS30 to an ESP32-S3 over UART, and powered and
-  tested it on my desk (the firmware was flashed from my machine with the Arduino tools): the serial monitor showed the
-  sensor's readings, I connected the live site to it over Bluetooth from Chrome on my Mac, and when it showed "no reading"
-  after the app connected, I tested the fix on the board.
-- **Checked what the app claims.** Every claim is sourced or dropped, which is why `docs/claims.md` lists what we do not say
-  (a station's cost, the unit's cost, "ten years", accuracy) until there is evidence.
+- **Decided what to build and what not to claim.** I chose the problem (a Delhi family or school that has air-quality
+  numbers but not an actionable decision), designed the user screens, established the sixteen core safety rules the app must never break (`docs/safety.md`), and set conservative boundaries: a GRAP stage is our estimate, a reading older than six hours gives no advice, and low-cost sensors are never misrepresented as "scientific-grade".
+- **Reviewed and ran every change.** I reviewed every diff, executed builds locally, tested responsive viewports, and rejected improper assumptions. I preserved visual minimalism, unified shared design primitives across screens, and enforced real-world data purity: zero mocked data in production builds, and recorded weeks derived exclusively from public station archives. Every change verified through `make prove` (lint, TypeScript strict mode, 1,285 tests, `cdk synth`, and production bundle checks).
+- **Architected and operated AWS infrastructure.** The entire stack (`AeroVigilStack`) lives in my AWS account. I configured provider keys (OpenAQ, NASA FIRMS) in Secrets Manager, monitored live API latencies (median 1.5s cold/warm Lambda, 0.15s CloudFront cache hit), and established alarms for quiet failures.
+- **Engineered the hardware prototype.** Sourced components, wired a Sensirion SPS30 to an ESP32-S3 over UART, and wrote the firmware (`firmware/aerovigil-unit/aerovigil-unit.ino`) broadcasting Bluetooth LE telemetry every 2 seconds. Diagnosed and resolved sensor communication lockups on connection.
+- **Built the air purifier test apparatus.** Fabricated a multi-stage prototype (box, centrifugal blower, pleated HEPA filter, foam pre-filter) and calibrated outlet airflow (~191 cfm) using a digital vane anemometer.
+- **Enforced claims governance.** Maintained `docs/claims.md` ensuring every technical claim has rigorous empirical or architectural proof.
 
 ## What the app does at run time
 

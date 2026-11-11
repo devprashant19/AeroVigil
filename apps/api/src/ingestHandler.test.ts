@@ -11,7 +11,7 @@ const store = (rows: Reading[] = []): Parameters<typeof ingestEvent>[1] => ({
   readingsSince: () => Promise.resolve(rows),
 });
 const event = {
-  thingId: 'aerovigil-dev-01',
+  thingId: 'aero-dev-01',
   schemaVersion: 1,
   ts: '2026-10-08T10:00:20.000Z',
   seq: 1,
@@ -24,7 +24,7 @@ describe('ingestEvent (what the IoT rule sends)', () => {
     const rows: Reading[] = [];
     const result = await ingestEvent(event, store(rows), NOW);
     expect(result.status).toBe('stored');
-    expect(rows[0]).toMatchObject({ thingId: 'aerovigil-dev-01', pm25: 40 });
+    expect(rows[0]).toMatchObject({ thingId: 'aero-dev-01', pm25: 40 });
   });
 
   it('rejects an event with no unit name, and one where the name is not a string', async () => {
