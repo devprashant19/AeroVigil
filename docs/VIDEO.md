@@ -1,6 +1,6 @@
 # The video: what to open, what to show, what to say
 
-Under three minutes, unlisted demo video. The cut below speaks about 340 words, which is about 2 minutes 15 seconds at a calm pace, so the pauses and cuts to the AWS console fit inside 2:55.
+Under three minutes, demo walkthrough. The cut below speaks about 340 words, which is about 2 minutes 15 seconds at a calm pace, so the pauses and cuts to the AWS console fit inside 2:55.
 
 The first video ran 4:00, was a tour of features, never said "AWS" and had no numbers. This one is built on one moment: **the morning after Diwali, a parent asks: do we walk to school?** Everything else supports it. It names AWS, shows the hardware, shows the recorded days, states one honest limit and gives three numbers.
 
@@ -42,4 +42,4 @@ Captions burned in. The $4.50 is from AWS list prices, not a bill.
 
 ## After
 
-Upload unlisted, open the link signed out on a phone, check the captions, and put the link in the README and the form.
+Check the captions, verify audio, and provide the live demo link in the submission form.

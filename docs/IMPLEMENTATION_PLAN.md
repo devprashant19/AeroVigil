@@ -118,7 +118,7 @@ aerovigil/
 ├── firmware/
 │   └── aerovigil-unit/      # ESP32-S3 BLE firmware for Sensirion SPS30 particle sensor
 ├── docs/                    # Architectural specifications and ADRs
-└── submission/              # Hackathon submission documentation & credentials
+└── JUDGING.md               # Hackathon evaluation dossier & rubric mapping
 ```
 
 ---

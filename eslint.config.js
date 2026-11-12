@@ -14,6 +14,8 @@ export default tseslint.config(
       'tests/live-check/**',
       '**/coverage/**',
       'docs/**',
+      '.agentfoundry/**',
+      'submission/**',
     ],
   },
   js.configs.recommended,

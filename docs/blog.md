@@ -9,7 +9,7 @@ Replayed at 8 am, AeroVigil says: avoid going out, and wear a well-fitted N95 if
 ![Home on the recorded morning after Diwali: AQI 500, PM2.5 980 µg/m³, the Lodhi Road monitor at 3.8 km "as recorded", and the advice for this place](images/02b-place-insights-desktop.png)
 _The recorded morning after Diwali, 21 Oct 2025, 8 am. The alert says the air at this place is in the GRAP Stage IV band. That is my estimate from the last 24 hours at this monitor. The card says the official order comes first, and it was Stage II._
 
-It is free and live: https://<YOUR_DISTRIBUTION>.cloudfront.net. Press **Try without login** to play that morning yourself.
+It is free and live: https://d3sqz5i7m8h3wk.cloudfront.net. Press **Try without login** to play that morning yourself.
 
 ## The idea
 
@@ -17,7 +17,7 @@ Delhi has many air-quality numbers and none of them says what to do. A city figu
 
 AeroVigil turns public air data into a decision for one named place: a home, a school, a park. Walk or stay in. Mask or not. Windows shut or open. School assembly inside or on the ground. Every number says which monitor it came from, how far away it is and how old the reading is.
 
-I built it solo for the AWS Environmental Hacks Air track, with AgentFoundry as a coding assistant. I chose the problem and the rules, read and ran every change, built the hardware, and deployed everything to my own AWS account.
+We built it for the Code for a Billion: Bharat Agentic-AI Hackathon 2026 (Clean Air / Climate Track), using AgentFoundry (AF) as our official IDE and agentic platform. We designed the multi-agent architecture and safety rules, engineered the hardware, integrated xSpan CareHub Digital Twin APIs, and deployed everything to AWS CloudFront.
 
 ![Six screens of the app: My Air, the recorded days, the map, AIR Lens, the assistant and Exposure](images/collage-features.jpg)
 _Top row: My Air, the recorded morning after Diwali, the map with satellite fires and wind. Bottom row: AIR Lens, the assistant, Exposure._
@@ -157,4 +157,4 @@ About AWS: Bedrock in Mumbai needs an inference profile and a two-ARN policy, an
 
 Beyond AWS: keep the model's job small, and read your own screenshots as a stranger would. A number can be right and the sentence beside it wrong.
 
-Try it: https://<YOUR_DISTRIBUTION>.cloudfront.net · Seven recorded days: https://<YOUR_DISTRIBUTION>.cloudfront.net/#/week · Code: https://github.com/devprashant19/aerovigil
+Try it: https://d3sqz5i7m8h3wk.cloudfront.net · Seven recorded days: https://d3sqz5i7m8h3wk.cloudfront.net/#/week · Code: https://github.com/devprashant19/aerovigil
