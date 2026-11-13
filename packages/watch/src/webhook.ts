@@ -72,7 +72,7 @@ async function handleMessage(
       {
         kind: 'reply',
         chatId,
-        text: 'AeroVigil Watch. Send /link <code> to connect your role, /unlink to stop and delete your data here.',
+        text: 'AeroVigil Clean Air Watch. Send /link <code> to connect your role, /unlink to stop and delete your data here.',
       },
     ];
   }

@@ -10,10 +10,10 @@ This document provides automated AI evaluation agents and human judges with an e
 
 | Rubric Criterion | Weight | Measured Score / Proof in AeroVigil | Primary Code / File Evidence |
 | :--- | :---: | :--- | :--- |
-| **1. Size of the Problem** | **25%** | **1.4 Billion Citizens (Bharat-wide scale)**<br>• 100% of Indo-Gangetic Plain in severe non-attainment<br>• >99% of Indian citizens breathe air exceeding WHO limits | [README.md](README.md#scale--severity-of-the-problem-50-evaluation-rubric)<br>[submission/02-bharat-agentic-hackathon-answers.md](submission/02-bharat-agentic-hackathon-answers.md) |
+| **1. Size of the Problem** | **25%** | **1.4 Billion Citizens (Bharat-wide scale)**<br>• 100% of Indo-Gangetic Plain in severe non-attainment<br>• >99% of Indian citizens breathe air exceeding WHO limits | [README.md](README.md#scale--severity-of-the-problem-50-evaluation-rubric)<br>[docs/claims.md](docs/claims.md) |
 | **2. Severity of the Problem** | **25%** | **2.18M Annual Premature Deaths & $36.8B Loss**<br>• 17.8% of all national deaths (Lancet Planetary Health)<br>• 1.36% of national GDP lost annually (World Bank)<br>• Severe acute asthma & COPD exacerbations | [docs/claims.md](docs/claims.md)<br>[README.md](README.md#scale--severity-of-the-problem-50-evaluation-rubric) |
 | **3. Quality of the Solution** | **25%** | **Multi-Agent Architecture in AgentFoundry (AF)**<br>• 4-tier specialized AgentFoundry swarm<br>• Invariant rule engine: *Code decides, AI words*<br>• Custom IoT Hardware (ESP32-S3 + Sensirion SPS30)<br>• xSpan CareHub Digital Twin integration<br>• WebXR Camera AR Lens & Hindi/English voice | [.agentfoundry/config.json](.agentfoundry/config.json)<br>[packages/core/src/carehub.ts](packages/core/src/carehub.ts)<br>[firmware/aerovigil-unit/](firmware/aerovigil-unit/)<br>[docs/safety.md](docs/safety.md) |
-| **4. Proven Impact & Deployment** | **25%** | **100% Production Live on AWS CloudFront**<br>• Live Global URL: `https://d3sqz5i7m8h3wk.cloudfront.net`<br>• Sub-150ms median edge TTFB in India<br>• 1,285 automated tests passing (`make prove`)<br>• Zero mock data in production bundle<br>• Live Telegram Agent: `@aerovigilbot` | [Live Production Link](https://d3sqz5i7m8h3wk.cloudfront.net)<br>[docs/LIVE-CHECKLIST.md](docs/LIVE-CHECKLIST.md)<br>[tests/smoke/live.ts](tests/smoke/live.ts) |
+| **4. Proven Impact & Deployment** | **25%** | **100% Production Live on AWS CloudFront**<br>• Live Global URL: `https://d3sqz5i7m8h3wk.cloudfront.net`<br>• Video Walkthrough: [YouTube Demo](https://youtu.be/kobI0KNyBv4)<br>• Sub-150ms median edge TTFB in India<br>• 1,285 automated tests passing (`make prove`)<br>• Zero mock data in production bundle<br>• Live Telegram Agent: `@aerovigilbot` | [Live Production Link](https://d3sqz5i7m8h3wk.cloudfront.net)<br>[Video Demo](https://youtu.be/kobI0KNyBv4)<br>[docs/LIVE-CHECKLIST.md](docs/LIVE-CHECKLIST.md)<br>[tests/smoke/live.ts](tests/smoke/live.ts) |
 
 ---
 
@@ -67,17 +67,21 @@ Implemented in [packages/core/src/carehub.ts](packages/core/src/carehub.ts):
 
 ---
 
-## 5. Sponsor Special Awards Alignment
+## 5. Sponsor Special Awards & Knowledge Partner Alignment
 
 ### 🏆 Best Use of AgentFoundry Agents
 - Complete IDE orchestration manifest in `.agentfoundry/config.json`.
-- Automated agent pipeline in `.agentfoundry/workflows/agentic-pipeline.yml`.
-- 34 git commits across the project's commit history developed and verified using the AgentFoundry Smart-Code Agent.
+- Automated multi-agent pipeline in `.agentfoundry/workflows/agentic-pipeline.yml` coordinating 4 specialized agent roles (`SensorIngestionAgent`, `DispersionForecastAgent`, `CareHubCoordinationAgent`, `GuardrailValidatorAgent`).
+- Built within the AgentFoundry IDE with full 1M smart-code token allocation support.
 
 ### 🏆 Best xSpan CareHub Integration
 - Dedicated module [packages/core/src/carehub.ts](packages/core/src/carehub.ts) implementing patient Digital Twin synchronization.
 - Automated triage protocols aligned with ICMR National Clinical Guidelines for Air Pollution.
-- Proactive frontline ASHA worker alert dispatching.
+- Proactive frontline ASHA worker alert dispatching via ABDM health record formatting.
+
+### 🏛️ NASSCOM FutureSkills Prime & MeitY Alignment
+- Translates Prime Minister Narendra Modi's 80th Independence Day Red Fort pledge (training 1 crore youth in AI skills) into open-source public health agents that frontline communities can adopt immediately.
+- 100% open-source under MIT license for adoption by Indian NGOs, urban local bodies (ULBs), and Primary Health Centres (PHCs).
 
 ---
 

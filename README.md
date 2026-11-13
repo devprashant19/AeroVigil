@@ -6,6 +6,7 @@ Track: **Climate / Clean Air (Track 04)** & **Health (Track 06)**
 
 [![AgentFoundry IDE](https://img.shields.io/badge/IDE-AgentFoundry-blue.svg)](https://agentfoundry.me)
 [![xSpan CareHub API](https://img.shields.io/badge/Partner-xSpan%20CareHub-emerald.svg)](https://codeforindia.org/hackathon)
+[![Video Demo](https://img.shields.io/badge/Video%20Demo-YouTube-red.svg)](https://youtu.be/kobI0KNyBv4)
 [![Live Demo](https://img.shields.io/badge/Production-CloudFront-orange.svg)](https://d3sqz5i7m8h3wk.cloudfront.net)
 [![Telegram Bot](https://img.shields.io/badge/Telegram-@aerovigilbot-blue.svg)](https://t.me/aerovigilbot)
 [![Judging Dossier](https://img.shields.io/badge/Judging-Dossier%20%26%20Rubric-purple.svg)](JUDGING.md)
@@ -26,6 +27,7 @@ City-wide averages mask deadly micro-climates. AeroVigil answers for **one speci
 - Clinical dispatch: Automatically synchronizes with **xSpan CareHub Digital Twin APIs**, notifying local ASHA / PHC health workers of vulnerable respiratory patients in that pin code.
 
 **Live Production URL:** [https://d3sqz5i7m8h3wk.cloudfront.net](https://d3sqz5i7m8h3wk.cloudfront.net)  
+**Video Demonstration Walkthrough:** [https://youtu.be/kobI0KNyBv4](https://youtu.be/kobI0KNyBv4)  
 **Historical Scenario Replay (7 Real Past Days):** [https://d3sqz5i7m8h3wk.cloudfront.net/#/week](https://d3sqz5i7m8h3wk.cloudfront.net/#/week)  
 **Telegram Assistant Agent:** [@aerovigilbot](https://t.me/aerovigilbot)  
 

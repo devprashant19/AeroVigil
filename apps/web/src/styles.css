@@ -1,4 +1,4 @@
-/* AeroVigil: Today. Base look follows IQAir; colours are the six US AQI levels, contrast-checked in levels.test.ts. */
+/* The AeroVigil Project: Today. Base look follows IQAir; colours are the six US AQI levels, contrast-checked in levels.test.ts. */
 
 @property --level {
   syntax: '<color>';
