@@ -184,6 +184,35 @@ async function main(): Promise<void> {
     parsedStations?.success === true ? `${parsedStations.data.stations.length} monitors` : '',
   );
 
+  // Central outcome impact endpoint check: machine-readable backtest verification
+  const impact = await getJson('/v1/impact');
+  const impactData = impact.body as {
+    centralOutcome?: string;
+    backtestSummary?: { averageInhalationReductionPct?: number };
+  } | null;
+  report(
+    'central outcome impact endpoint (/v1/impact)',
+    impact.status !== 200
+      ? [`status ${impact.status}`]
+      : impactData?.backtestSummary?.averageInhalationReductionPct === 42.0
+        ? []
+        : ['average inhalation reduction did not match 42.0%'],
+    impactData?.centralOutcome ?? '',
+  );
+
+  // Digital twin clinical integration endpoint: xSpan CareHub sync
+  const carehub = await postJson('/v1/carehub/sync', { patientId: 'SMOKE-TEST', exposureUgM3: 50.0 });
+  const chData = carehub.body as { status?: string; synced?: boolean } | null;
+  report(
+    'carehub digital twin sync (/v1/carehub/sync)',
+    carehub.status !== 200
+      ? [`status ${carehub.status}`]
+      : chData?.status === 'success' && chData?.synced === true
+        ? []
+        : ['carehub payload was not synced successfully'],
+    chData?.status ?? '',
+  );
+
   // The assistant: one real question, and the ways it must say no.
   const ask = await postJson('/v1/assistant', {
     question: 'Do I need a mask?',

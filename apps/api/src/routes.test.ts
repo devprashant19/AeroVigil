@@ -306,4 +306,35 @@ describe('accounts on the router', () => {
     });
     expect(signedIn.statusCode).toBe(401);
   });
+
+  it('routes POST /v1/carehub/sync and returns 200 with digital twin payload', async () => {
+    const router = createRouter(baseDeps);
+    const response = await router({
+      method: 'POST',
+      path: '/v1/carehub/sync',
+      query: {},
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ patientId: 'P123', aqi: 450, pm25: 310 }),
+    });
+    expect(response.statusCode).toBe(200);
+    expect((response.body as any).status).toBe('success');
+    expect((response.body as any).synced).toBe(true);
+    expect((response.body as any).digitalTwin.patientId).toBe('P123');
+  });
+
+  it('routes GET /v1/impact and returns 200 with verified backtest outcomes', async () => {
+    const router = createRouter(baseDeps);
+    const response = await router({
+      method: 'GET',
+      path: '/v1/impact',
+      query: {},
+      headers: {},
+    });
+    expect(response.statusCode).toBe(200);
+    const body = response.body as any;
+    expect(body.centralOutcome).toBe('Same walk, 42.0% less PM2.5 inhalation');
+    expect(body.backtestSummary.stationDaysAnalyzed).toBe(13);
+    expect(body.backtestSummary.averageInhalationReductionPct).toBe(42.0);
+    expect(body.backtestSummary.noCleanWindowDaysPct).toBe(7.7);
+  });
 });

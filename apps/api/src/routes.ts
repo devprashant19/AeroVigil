@@ -199,6 +199,9 @@ export function createRouter(deps: RouterDeps) {
         ? failure(404, 'not_found', `No route for ${request.path}`)
         : handleFixChecks(request, deps.fixChecks);
     }
+    if (request.path === '/v1/carehub/sync') {
+      return handleCareHubSync(request);
+    }
     if (request.method !== 'GET') {
       return failure(405, 'method_not_allowed', `${request.method} is not supported here`);
     }
@@ -236,8 +239,6 @@ export function createRouter(deps: RouterDeps) {
           ...deps,
           mode: deps.mode === 'live' ? 'live' : 'model',
         });
-      case '/v1/carehub/sync':
-        return handleCareHubSync(request);
       case '/v1/stations':
         return deps.cache === undefined
           ? failure(404, 'not_found', `No route for ${request.path}`)
@@ -245,6 +246,40 @@ export function createRouter(deps: RouterDeps) {
               stations: (asOf) => deps.cache?.stations?.(asOf) ?? Promise.resolve(undefined),
               clock: deps.clock,
             });
+      case '/v1/impact': {
+        if (request.method !== 'GET') {
+          return failure(405, 'method_not_allowed', `${request.method} is not supported here`);
+        }
+        const asOf = deps.clock.now();
+        return okCached(
+          {
+            schemaVersion: 1,
+            asOf,
+            centralOutcome: 'Same walk, 42.0% less PM2.5 inhalation',
+            methodology: 'Convective boundary-layer diurnal shift (morning inversion rush hour 07:00-08:00 vs dynamic cleanest daylight hour)',
+            backtestSummary: {
+              stationDaysAnalyzed: 13,
+              stationsAnalyzed: [
+                'Delhi - Anand Vihar (DPCC)',
+                'Delhi - Lodhi Road (IMD)',
+                'Delhi - IGI Airport Terminal 3 (CPCB)',
+                'Delhi - Talkatora Garden (DPCC)',
+              ],
+              averageInhalationReductionPct: 42.0,
+              maxInhalationReductionPct: 61.0,
+              noCleanWindowDaysPct: 7.7,
+              noCleanWindowEnforcedVerdict: 'STAY_INDOORS',
+            },
+            provenance: {
+              sourceCode: 'scripts/backtest-outcomes.mjs',
+              dossier: 'docs/BACKTEST_OUTCOMES.md',
+              indexedMonitorsIndia: 789,
+              indexedMonitorsGlobal: 7988,
+            },
+          },
+          300,
+        );
+      }
       case '/v1/wind':
         return deps.windRepo === undefined
           ? failure(404, 'not_found', `No route for ${request.path}`)

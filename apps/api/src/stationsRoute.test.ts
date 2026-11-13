@@ -50,6 +50,23 @@ describe('GET /v1/stations', () => {
     }
   });
 
+  it('resolves a regional station name when name is empty in snapshot', async () => {
+    const unnamedStation = {
+      id: '9999',
+      name: '',
+      lat: 28.65,
+      lng: 77.2,
+      pm25: 120,
+      at: '2026-10-10T11:00:00.000Z',
+    };
+    const response = await ask({
+      harvestedAt: '2026-10-10T11:40:00.000Z',
+      stations: [unnamedStation],
+    });
+    const body = Stations.parse(response.body);
+    expect(body.stations[0]?.name).toBe('Delhi North Monitor #9999');
+  });
+
   it('does not take a POST', async () => {
     expect((await ask(undefined, 'POST')).statusCode).toBe(405);
   });

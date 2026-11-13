@@ -1,5 +1,6 @@
 import { MapStation, Stations } from '@aerovigil/contracts';
 import type { Clock } from '@aerovigil/core';
+import { stationDisplayName } from '@aerovigil/data';
 import { z } from 'zod';
 import { failure, okCached, type ApiRequest, type ApiResponse } from './respond';
 
@@ -31,10 +32,15 @@ export async function handleStations(
   const snapshot = Snapshot.safeParse(raw);
   const limit = Date.parse(asOf);
   const stations = snapshot.success
-    ? snapshot.data.stations.filter((s) => {
-        const age = limit - Date.parse(s.at);
-        return age >= 0 && age <= MAX_AGE_MS;
-      })
+    ? snapshot.data.stations
+        .filter((s) => {
+          const age = limit - Date.parse(s.at);
+          return age >= 0 && age <= MAX_AGE_MS;
+        })
+        .map((s) => ({
+          ...s,
+          name: stationDisplayName(s.id, s.lat, s.lng, s.name),
+        }))
     : [];
   return okCached(
     Stations.parse({

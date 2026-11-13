@@ -15,8 +15,8 @@ This repository (**`devprashant19/AeroVigil`**) is the single authoritative sour
    - GitHub: [@puneetnith28](https://github.com/puneetnith28)
    - Email: `puneetnith28@gmail.com`
 
-Both authors confirm under penalty of disqualification that:
-- Every line of architecture, invariant safety code, AWS CDK infrastructure, hardware firmware, and clinical integration in this repository was designed and engineered by us as a collaborative team.
+Both authors confirm that:
+- We chose the problem, designed the architecture and the 16 safety invariants, directed and reviewed all agent-generated code, built the physical hardware, deployed and verified the production stack.
 - The project was developed inside the **AgentFoundry (AF)** IDE (`https://agentfoundry.me`) during the 90-day *Code for a Billion* hackathon window (15 August 2026 to 15 November 2026).
 - All code is released under the **MIT License** as an open-source Digital Public Good for the people of Bharat.
 
@@ -49,4 +49,4 @@ During early rapid prototyping and proof-of-concept experiments in September and
 
 ## 4. Open Source License
 
-Released under the **MIT License**. Copyright © 2026 Dev Prashant and Puneet Yadav. All rights reserved for open-source digital public good deployment across Indian schools, Primary Health Centres (PHCs), and urban local bodies.
+Released under the **MIT License**. Copyright (c) 2026 Dev Prashant and Puneet Yadav. Licensed as an open-source Digital Public Good for deployment across Indian schools, Primary Health Centres (PHCs), and urban local bodies.
