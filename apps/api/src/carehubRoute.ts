@@ -84,3 +84,4 @@ export async function handleCareHubSync(request: ApiRequest, deps: CareHubDeps =
     ...(alert ? { careCoordinationAlert: alert } : {}),
   });
 }
+

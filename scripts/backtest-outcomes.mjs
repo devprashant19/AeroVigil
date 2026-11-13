@@ -105,3 +105,4 @@ ${parkResults
 
 fs.writeFileSync(path.join(ROOT, 'docs/BACKTEST_OUTCOMES.md'), mdOutput, 'utf-8');
 console.log('Generated docs/BACKTEST_OUTCOMES.md successfully.');
+
