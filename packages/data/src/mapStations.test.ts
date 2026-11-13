@@ -39,8 +39,8 @@ describe('the map’s monitors, worldwide', () => {
       );
     const stations = await openAqMapStationRepo({ ...quick, fetchImpl }).latest(AS_OF);
     expect(stations).toEqual([
-      { id: '1', name: '', lat: 28.6, lng: 77.2, pm25: 55.4, at: '2026-10-10T11:00:00.000Z' },
-      { id: '2', name: '', lat: 47.83, lng: -122.25, pm25: 8, at: '2026-10-10T11:00:00.000Z' },
+      { id: '1', name: 'Delhi Central / Lodhi Monitor #1', lat: 28.6, lng: 77.2, pm25: 55.4, at: '2026-10-10T11:00:00.000Z' },
+      { id: '2', name: 'Air Monitor #2', lat: 47.83, lng: -122.25, pm25: 8, at: '2026-10-10T11:00:00.000Z' },
     ]);
   });
 

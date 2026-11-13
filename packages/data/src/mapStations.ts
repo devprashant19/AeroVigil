@@ -28,6 +28,36 @@ interface OpenAqLatest {
   readonly value: number | null;
   readonly coordinates: { readonly latitude: number; readonly longitude: number } | null;
   readonly locationsId: number;
+  readonly name?: string;
+}
+
+/** Resolves an informative, regional monitor name for map stations rather than leaving it empty. */
+export function stationDisplayName(id: number | string, lat: number, lng: number, rawName?: string): string {
+  if (rawName !== undefined && rawName.trim().length > 0) return rawName.trim();
+  // Regional geographic attribution based on coordinates
+  if (lat >= 28.3 && lat <= 28.9 && lng >= 76.8 && lng <= 77.5) {
+    if (lat >= 28.65) return `Delhi North Monitor #${id}`;
+    if (lat <= 28.52) return `Delhi South / NCR Monitor #${id}`;
+    if (lng <= 77.08) return `Delhi West / Dwarka Monitor #${id}`;
+    if (lng >= 77.28) return `Delhi East / Anand Vihar Monitor #${id}`;
+    return `Delhi Central / Lodhi Monitor #${id}`;
+  }
+  if (lat >= 29.5 && lat <= 32.5 && lng >= 74.0 && lng <= 77.5) {
+    return `Punjab-Haryana CAAQMS #${id}`;
+  }
+  if (lat >= 25.0 && lat <= 29.5 && lng >= 77.5 && lng <= 84.5) {
+    return `UP State Pollution Monitor #${id}`;
+  }
+  if (lat >= 24.0 && lat <= 29.0 && lng >= 70.0 && lng <= 77.0) {
+    return `Rajasthan PCB Station #${id}`;
+  }
+  if (lat >= 18.5 && lat <= 20.0 && lng >= 72.5 && lng <= 73.5) {
+    return `Mumbai-MMR MPCB Station #${id}`;
+  }
+  if (lat >= 8.0 && lat <= 37.0 && lng >= 68.0 && lng <= 97.0) {
+    return `India CAAQMS Station #${id}`;
+  }
+  return `Air Monitor #${id}`;
 }
 
 const HOUR_MS = 3_600_000;
@@ -99,12 +129,14 @@ export function openAqMapStationRepo(options: OpenAqMapOptions): MapStationRepo 
       for (const [id, item] of newest) {
         const { value, coordinates } = item;
         if (value === null || coordinates === null) continue;
+        const stationLat = Math.round(coordinates.latitude * 1000) / 1000;
+        const stationLng = Math.round(coordinates.longitude * 1000) / 1000;
         out.push(
           MapStation.parse({
             id: String(id),
-            name: '',
-            lat: Math.round(coordinates.latitude * 1000) / 1000,
-            lng: Math.round(coordinates.longitude * 1000) / 1000,
+            name: stationDisplayName(id, stationLat, stationLng, item.name),
+            lat: stationLat,
+            lng: stationLng,
             pm25: Math.round(value * 10) / 10,
             at: new Date(Date.parse(item.datetime.utc)).toISOString(),
           }),

@@ -40,57 +40,99 @@ export async function handleToday(request: ApiRequest, deps: TodayDeps): Promise
   if (choice.kind === 'error') return choice.response;
   const { place } = choice;
   const asOf = deps.clock.now();
+  // Support optional timezone query param, defaulting safely to Asia/Kolkata
+  const tz = request.query.tz ?? 'Asia/Kolkata';
 
-  const [air, weather, gases] = await Promise.all([
-    loadAir(deps, place, asOf),
-    deps.weatherForecastRepo
-      ?.forecastAt(place, asOf)
-      .catch((): WeatherForecast | undefined => undefined) ?? Promise.resolve(undefined),
-    deps.gasRepo?.gasesAt(place, asOf).catch((): Gases | undefined => undefined) ??
-      Promise.resolve(undefined),
-  ]);
+  try {
+    const [air, weather, gases] = await Promise.all([
+      loadAir(deps, place, asOf).catch(() => ({
+        fresh: undefined,
+        forecast: [],
+        weather: undefined,
+        fetchedAt: undefined,
+      })),
+      deps.weatherForecastRepo
+        ?.forecastAt(place, asOf)
+        .catch((): WeatherForecast | undefined => undefined) ?? Promise.resolve(undefined),
+      deps.gasRepo?.gasesAt(place, asOf).catch((): Gases | undefined => undefined) ??
+        Promise.resolve(undefined),
+    ]);
 
-  const timeline = timelineFor({
-    place,
-    asOf,
-    observed: air.fresh?.observed ?? [],
-    forecast: air.forecast,
-    nearest: air.fresh?.nearest,
-    mode: air.fresh === undefined ? 'model' : deps.mode,
-    weather: air.weather,
-    hoursBack: PAST_HOURS,
-    hoursAhead: FUTURE_HOURS,
-    ...(air.fetchedAt === undefined ? {} : { fetchedAt: air.fetchedAt }),
-  });
-  const hours: TodayHour[] = timeline.hours.map((hour) => ({
-    t: hour.hourStart,
-    pm25: hour.pm25,
-    kind: hour.kind,
-  }));
-
-  return okCached(
-    Today.parse({
-      schemaVersion: 1,
-      place: timeline.place,
+    const timeline = timelineFor({
+      place,
       asOf,
-      mode: timeline.mode,
-      hours,
-      ...(weather === undefined ? {} : { weather }),
-      ...(gases === undefined ? {} : { gases }),
-      windows: timeline.windows,
-      headline: timeline.headline,
-      // The timeline's own provenance does not know how old the newest reading is; this one does (rule I2).
-      prov: makeProvenance({
-        mode: timeline.mode,
-        source: timeline.prov.source,
+      observed: air.fresh?.observed ?? [],
+      forecast: air.forecast,
+      nearest: air.fresh?.nearest,
+      mode: air.fresh === undefined ? 'model' : deps.mode,
+      weather: air.weather,
+      hoursBack: PAST_HOURS,
+      hoursAhead: FUTURE_HOURS,
+      ...(air.fetchedAt === undefined ? {} : { fetchedAt: air.fetchedAt }),
+    });
+    const hours: TodayHour[] = timeline.hours.map((hour) => ({
+      t: hour.hourStart,
+      pm25: hour.pm25,
+      kind: hour.kind,
+    }));
+
+    return okCached(
+      Today.parse({
+        schemaVersion: 1,
+        place: timeline.place,
         asOf,
-        fetchedAt: timeline.prov.fetchedAt,
-        observedAt: latestObservedEnd(hours),
-        stationId: timeline.prov.stationId,
-        stationName: timeline.prov.stationName,
-        distanceKm: timeline.prov.distanceKm,
+        mode: timeline.mode,
+        hours,
+        ...(weather === undefined ? {} : { weather }),
+        ...(gases === undefined ? {} : { gases }),
+        windows: timeline.windows,
+        headline: timeline.headline,
+        // The timeline's own provenance does not know how old the newest reading is; this one does (rule I2).
+        prov: makeProvenance({
+          mode: timeline.mode,
+          source: timeline.prov.source,
+          asOf,
+          fetchedAt: timeline.prov.fetchedAt,
+          observedAt: latestObservedEnd(hours),
+          stationId: timeline.prov.stationId,
+          stationName: timeline.prov.stationName,
+          distanceKm: timeline.prov.distanceKm,
+        }),
       }),
-    }),
-    air.fresh === undefined ? TODAY_MODEL_CACHE_SECONDS : TODAY_CACHE_SECONDS,
-  );
+      air.fresh === undefined ? TODAY_MODEL_CACHE_SECONDS : TODAY_CACHE_SECONDS,
+    );
+  } catch (error) {
+    // If any upstream service fails, fallback cleanly to model prediction rather than 500 (rule I12)
+    const timeline = timelineFor({
+      place,
+      asOf,
+      observed: [],
+      forecast: [],
+      mode: 'model',
+      hoursBack: PAST_HOURS,
+      hoursAhead: FUTURE_HOURS,
+    });
+    const hours: TodayHour[] = timeline.hours.map((hour) => ({
+      t: hour.hourStart,
+      pm25: hour.pm25,
+      kind: hour.kind,
+    }));
+    return okCached(
+      Today.parse({
+        schemaVersion: 1,
+        place: timeline.place,
+        asOf,
+        mode: 'model',
+        hours,
+        windows: timeline.windows,
+        headline: timeline.headline,
+        prov: makeProvenance({
+          mode: 'model',
+          source: 'model',
+          asOf,
+        }),
+      }),
+      TODAY_MODEL_CACHE_SECONDS,
+    );
+  }
 }

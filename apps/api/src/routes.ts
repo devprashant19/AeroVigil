@@ -35,6 +35,7 @@ import { handleFireReports, type FireReportsDeps } from './fireReportsRoute';
 import { handleRequests, type RequestsDeps } from './requestsRoute';
 import { handleSpeech, type SpeechDeps } from './speechRoute';
 import { handleStations } from './stationsRoute';
+import { handleCareHubSync } from './carehubRoute';
 import { handleAirGrid } from './airGridRoute';
 import { handleWind } from './windRoute';
 import { handleToday } from './todayRoute';
@@ -235,6 +236,8 @@ export function createRouter(deps: RouterDeps) {
           ...deps,
           mode: deps.mode === 'live' ? 'live' : 'model',
         });
+      case '/v1/carehub/sync':
+        return handleCareHubSync(request);
       case '/v1/stations':
         return deps.cache === undefined
           ? failure(404, 'not_found', `No route for ${request.path}`)

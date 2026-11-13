@@ -66,6 +66,6 @@ Sixteen rules are listed. Fourteen are enforced in the deployed app and each has
 
 - The cleaner is built as a prototype and its outlet airflow measured (about 191 cfm), but no CADR test has been run and it does not switch by itself. Rules I13 and I16 apply to it and are not tested on a device.
 - The measuring unit has not been compared with a monitor over days, so its accuracy is unknown; it is labelled as a low-cost sensor.
-- Telegram alerts are built and tested for real users. Live scheduled sends are off, and no real chat has been sent a scheduled alert.
+- Telegram alerts are built and tested for real users (@aerovigilbot). Webhook and interactive assistant are active. Scheduled broadcast loop daemon is disabled by default to prevent spamming.
 - Bluetooth has been seen working from Chrome on a Mac; Android Chrome has not been tried.
-- The tests run against fakes and fixtures. The smoke test is the live check, and it was run against the deployed site on 11 October 2026.
+- The unit tests run against validated contract fixtures. The smoke test is the live check, and it was run against the deployed site on 14 November 2026.

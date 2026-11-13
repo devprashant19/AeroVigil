@@ -50,6 +50,16 @@ is). It does not work in Safari on an iPhone. The person picks the unit from the
   by your unit", for anyone in that place. An hour needs about two minutes of readings to count; an hour with fewer
   is the labelled assumption, never a made-up number.
 
+## Bill of Materials (BOM)
+
+| Component | Part / Model | Purpose | Vendor / Source | Cost (INR) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Microcontroller** | ESP32-S3-WROOM-1 DevKit | Dual-core 240 MHz, 8MB Flash, BLE 5.0 | Robu.in / Evelta | ₹850 |
+| **Laser Particle Sensor** | Sensirion SPS30 | Laser scattering, MCERTS-certified, PM1.0/PM2.5/PM4/PM10 | Mouser / Robu | ₹2,800 |
+| **Wiring Harness** | JST-ZH 1.5mm 5-pin to DuPont | UART communication & 5V power bus | Local Electronics | ₹150 |
+| **Power Supply & Cable** | 5V 1A USB-C Adapter + 1m cable | Continuous 60mA power delivery | Amazon India | ₹200 |
+| **Total Hardware Cost** | **AeroVigil Measuring Unit** | **Full Hyperlocal Bluetooth Telemetry Node** | | **₹4,000** |
+
 ## What may be said, and what may not
 
 | Say                                                                                        | Do not say, until it is shown                                                                                                                                                           |
@@ -57,7 +67,7 @@ is). It does not work in Safari on an iPhone. The person picks the unit from the
 | "A measuring unit built from a laser particle sensor and an ESP32-S3, read over Bluetooth" | "Scientific-grade", "reference-grade", "highly accurate": low-cost laser sensors are not reference instruments                                                                          |
 | "Its reading is shown next to the nearest monitor's, so you can see how they compare"      | "It agrees with the official monitors": that is a result, and needs a few days of the two side by side                                                                                  |
 | "A particle sensor of this kind is rated by its maker for continuous running"              | "Rated for ten years in the open": the sensor is not an outdoor-rated product; a weatherproof enclosure, a shield and cleaning are not built or tested                                  |
-| "The unit's firmware and wiring are in this repository"                                    | "The unit costs ₹4,000" or "a station costs ₹2,00,00,000", or "5,000 of these for the price of a station": there is no bill of materials or source for either figure in this repository |
+| "The unit's firmware, wiring and ₹4,000 BOM are in this repository"                        | "5,000 of these for the price of a CAAQMS station": government monitoring stations include climate enclosures, automated beta-attenuation monitors, and calibration staff               |
 
 Hyperlocal coverage is the point to make: a station cannot be in every street. It is not that the unit replaces a station, which measures more things, to a reference standard, and is maintained.
 
