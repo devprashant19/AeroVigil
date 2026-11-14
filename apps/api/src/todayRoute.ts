@@ -40,8 +40,6 @@ export async function handleToday(request: ApiRequest, deps: TodayDeps): Promise
   if (choice.kind === 'error') return choice.response;
   const { place } = choice;
   const asOf = deps.clock.now();
-  // Support optional timezone query param, defaulting safely to Asia/Kolkata
-  const tz = request.query.tz ?? 'Asia/Kolkata';
 
   try {
     const [air, weather, gases] = await Promise.all([
@@ -101,7 +99,7 @@ export async function handleToday(request: ApiRequest, deps: TodayDeps): Promise
       }),
       air.fresh === undefined ? TODAY_MODEL_CACHE_SECONDS : TODAY_CACHE_SECONDS,
     );
-  } catch (error) {
+  } catch {
     // If any upstream service fails, fallback cleanly to model prediction rather than 500 (rule I12)
     const timeline = timelineFor({
       place,
@@ -109,6 +107,7 @@ export async function handleToday(request: ApiRequest, deps: TodayDeps): Promise
       observed: [],
       forecast: [],
       mode: 'model',
+      nearest: undefined,
       hoursBack: PAST_HOURS,
       hoursAhead: FUTURE_HOURS,
     });

@@ -317,9 +317,10 @@ describe('accounts on the router', () => {
       body: JSON.stringify({ patientId: 'P123', aqi: 450, pm25: 310 }),
     });
     expect(response.statusCode).toBe(200);
-    expect((response.body as any).status).toBe('success');
-    expect((response.body as any).synced).toBe(true);
-    expect((response.body as any).digitalTwin.patientId).toBe('P123');
+    const careHubBody = response.body as { status: string; synced: boolean; digitalTwin: { patientId: string } };
+    expect(careHubBody.status).toBe('success');
+    expect(careHubBody.synced).toBe(true);
+    expect(careHubBody.digitalTwin.patientId).toBe('P123');
   });
 
   it('routes GET /v1/impact and returns 200 with verified backtest outcomes', async () => {
@@ -331,7 +332,14 @@ describe('accounts on the router', () => {
       headers: {},
     });
     expect(response.statusCode).toBe(200);
-    const body = response.body as any;
+    const body = response.body as {
+      centralOutcome: string;
+      backtestSummary: {
+        stationDaysAnalyzed: number;
+        averageInhalationReductionPct: number;
+        noCleanWindowDaysPct: number;
+      };
+    };
     expect(body.centralOutcome).toBe('Same walk, 42.0% less PM2.5 inhalation');
     expect(body.backtestSummary.stationDaysAnalyzed).toBe(13);
     expect(body.backtestSummary.averageInhalationReductionPct).toBe(42.0);

@@ -1,13 +1,31 @@
+import type { Band } from '@aerovigil/contracts';
 import {
   buildCareHubDigitalTwinPayload,
   dispatchCareCoordinationAlert,
   type CareHubPatientContext,
+  type ClinicalVulnerability,
 } from '@aerovigil/core';
 import { failure, ok, type ApiRequest, type ApiResponse } from './respond';
 
 export interface CareHubDeps {
   readonly endpointUrl?: string;
   readonly fetchImpl?: typeof fetch;
+}
+
+interface CareHubRequestBody {
+  readonly patientId?: string;
+  readonly abdmHealthId?: string;
+  readonly pinCode?: string;
+  readonly vulnerabilities?: readonly ClinicalVulnerability[];
+  readonly aqi?: number;
+  readonly band?: Band;
+  readonly pm25?: number;
+  readonly pm10?: number;
+  readonly cumulativeExposureMg?: number;
+  readonly cigaretteEquivalence?: number;
+  readonly phcCenterId?: string;
+  readonly ashaWorkerId?: string;
+  readonly affectedCohortSize?: number;
 }
 
 /**
@@ -20,27 +38,28 @@ export async function handleCareHubSync(request: ApiRequest, deps: CareHubDeps =
     return failure(405, 'method_not_allowed', `${request.method} is not supported here; use POST`);
   }
 
-  let body: any;
+  let body: CareHubRequestBody;
   try {
-    body = typeof request.body === 'string' ? JSON.parse(request.body) : request.body ?? {};
+    const raw: unknown = typeof request.body === 'string' ? JSON.parse(request.body) : request.body;
+    body = (raw && typeof raw === 'object' ? raw : {});
   } catch {
     return failure(400, 'invalid_json', 'Malformed JSON payload in request body');
   }
 
   const patient: CareHubPatientContext = {
-    patientId: body.patientId ?? 'ABDM-NDHM-91823',
-    abdmHealthId: body.abdmHealthId ?? '91-8293-1029-4821',
-    pinCode: body.pinCode ?? '110022',
-    vulnerabilities: body.vulnerabilities ?? ['pediatric_asthma', 'copd'],
+    patientId: body.patientId ?? 'unlinked-patient',
+    ...(body.abdmHealthId !== undefined ? { abdmHealthId: body.abdmHealthId } : {}),
+    pinCode: body.pinCode ?? '110001',
+    vulnerabilities: body.vulnerabilities ?? [],
   };
 
   const env = {
-    aqi: Number(body.aqi ?? 434),
-    band: (body.band ?? 'Severe') as any,
-    pm25: Number(body.pm25 ?? 295.4),
-    pm10: Number(body.pm10 ?? 450),
-    cumulativeExposureMg: Number(body.cumulativeExposureMg ?? 1.82),
-    cigaretteEquivalence: Number(body.cigaretteEquivalence ?? 13.4),
+    aqi: body.aqi ?? 434,
+    band: body.band ?? 'severe',
+    pm25: body.pm25 ?? 295.4,
+    pm10: body.pm10 ?? 450,
+    cumulativeExposureMg: body.cumulativeExposureMg ?? 1.82,
+    cigaretteEquivalence: body.cigaretteEquivalence ?? 13.4,
   };
 
   const twinPayload = buildCareHubDigitalTwinPayload(patient, env);

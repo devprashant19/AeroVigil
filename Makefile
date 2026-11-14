@@ -1,4 +1,4 @@
-.PHONY: install lint format typecheck test synth bundle prove local local-api deploy-diff deploy-site smoke
+.PHONY: install lint format typecheck test synth bundle prove local local-api deploy-diff deploy-site smoke af-run
 
 install:
 	npm install
@@ -29,6 +29,10 @@ bundle:
 # One command that proves the claims: lint, types, tests and the stack, and it fails closed.
 prove: lint typecheck test synth bundle
 	@echo "prove: lint, types, tests, cdk synth and the bundle check passed"
+
+# Run the 4-agent autonomous swarm pipeline
+af-run:
+	npx tsx scripts/run-af-pipeline.ts
 
 # ---- AWS (only run these on purpose: they touch a real account) ----
 # Read what would change before anything is deployed.

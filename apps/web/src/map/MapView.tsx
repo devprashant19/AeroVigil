@@ -512,7 +512,7 @@ export function MapView({
       const box = document.createElement('div');
       box.className = 'map-popup';
       const title = document.createElement('strong');
-      title.textContent = p.name !== undefined && p.name !== '' ? p.name : 'Air monitor';
+      title.textContent = p.name !== undefined && p.name !== '' && p.name !== 'Air monitor' ? p.name : 'Unnamed monitor';
       const body = document.createElement('p');
       body.textContent = `AQI ${String(p.aqi)} · PM2.5 ${String(p.pm25)} µg/m³ · ${String(p.age)} min ago`;
       const note = document.createElement('p');

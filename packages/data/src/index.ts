@@ -16,3 +16,4 @@ export * from './weatherForecast';
 export * from './mapStations';
 export * from './windGrid';
 export * from './airGrid';
+export * from './backtestDatasets';

@@ -50,7 +50,7 @@ describe('GET /v1/stations', () => {
     }
   });
 
-  it('resolves a regional station name when name is empty in snapshot', async () => {
+  it('sends null when name is empty in snapshot rather than fabricating a label', async () => {
     const unnamedStation = {
       id: '9999',
       name: '',
@@ -64,7 +64,7 @@ describe('GET /v1/stations', () => {
       stations: [unnamedStation],
     });
     const body = Stations.parse(response.body);
-    expect(body.stations[0]?.name).toBe('Delhi North Monitor #9999');
+    expect(body.stations[0]?.name).toBeNull();
   });
 
   it('does not take a POST', async () => {

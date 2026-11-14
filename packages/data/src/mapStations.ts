@@ -31,33 +31,12 @@ interface OpenAqLatest {
   readonly name?: string;
 }
 
-/** Resolves an informative, regional monitor name for map stations rather than leaving it empty. */
-export function stationDisplayName(id: number | string, lat: number, lng: number, rawName?: string): string {
-  if (rawName !== undefined && rawName.trim().length > 0) return rawName.trim();
-  // Regional geographic attribution based on coordinates
-  if (lat >= 28.3 && lat <= 28.9 && lng >= 76.8 && lng <= 77.5) {
-    if (lat >= 28.65) return `Delhi North Monitor #${id}`;
-    if (lat <= 28.52) return `Delhi South / NCR Monitor #${id}`;
-    if (lng <= 77.08) return `Delhi West / Dwarka Monitor #${id}`;
-    if (lng >= 77.28) return `Delhi East / Anand Vihar Monitor #${id}`;
-    return `Delhi Central / Lodhi Monitor #${id}`;
+/** Resolves monitor name; where OpenAQ gives none, returns null rather than fabricating a label. */
+export function stationDisplayName(_id: number | string, _lat: number, _lng: number, rawName?: string | null): string | null {
+  if (rawName !== undefined && rawName !== null && rawName.trim().length > 0 && rawName.trim() !== 'Unnamed monitor') {
+    return rawName.trim();
   }
-  if (lat >= 29.5 && lat <= 32.5 && lng >= 74.0 && lng <= 77.5) {
-    return `Punjab-Haryana CAAQMS #${id}`;
-  }
-  if (lat >= 25.0 && lat <= 29.5 && lng >= 77.5 && lng <= 84.5) {
-    return `UP State Pollution Monitor #${id}`;
-  }
-  if (lat >= 24.0 && lat <= 29.0 && lng >= 70.0 && lng <= 77.0) {
-    return `Rajasthan PCB Station #${id}`;
-  }
-  if (lat >= 18.5 && lat <= 20.0 && lng >= 72.5 && lng <= 73.5) {
-    return `Mumbai-MMR MPCB Station #${id}`;
-  }
-  if (lat >= 8.0 && lat <= 37.0 && lng >= 68.0 && lng <= 97.0) {
-    return `India CAAQMS Station #${id}`;
-  }
-  return `Air Monitor #${id}`;
+  return null;
 }
 
 const HOUR_MS = 3_600_000;

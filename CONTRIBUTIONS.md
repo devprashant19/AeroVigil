@@ -9,18 +9,21 @@ We (**Dev Prashant**, GitHub: [@devprashant19](https://github.com/devprashant19)
 - **Repository:** [https://github.com/devprashant19/aerovigil](https://github.com/devprashant19/aerovigil)
 - **Official IDE:** AgentFoundry (AF) with 1M allocated smart-code tokens
 
-## AgentFoundry (AF) IDE Orchestration & Agents
+## AgentFoundry (AF) IDE Orchestration & Swarm Pipeline
 
-We orchestrated our development using AgentFoundry's smart-code agentic pipelines (`.agentfoundry/config.json`). Across the build sprint, we utilized AgentFoundry to synthesize, test, and coordinate four specialized micro-agents:
-1. **SensorIngestionAgent:** Automated type-safe boundary contracts (Zod) validating live CPCB, DPCC, IITM, and OpenAQ streams against strict provenance rules (rule I2).
-2. **DispersionForecastAgent:** Computational wind vector integration (MET Norway) and NASA FIRMS thermal anomaly attribution.
-3. **CareHubCoordinationAgent:** Built the integration with xSpan CareHub Digital Twin & Care-Coordination APIs (`packages/core/src/carehub.ts`), bridging severe air spikes directly into frontline ASHA/PHC clinical workflows.
-4. **GuardrailValidatorAgent:** Enforced mathematical invariance across all 1,292 tests and `make prove` gates.
+We orchestrated our development using AgentFoundry's smart-code agentic pipelines (`.agentfoundry/config.json`) with an autonomous multi-agent swarm architecture implemented in code (`packages/core/src/afSwarm.ts`, `scripts/run-af-pipeline.ts` via `npm run af:run`):
+1. **SensorIngestionAgent (`claude-3-5-sonnet`):** Automated type-safe boundary contracts (Zod) validating live CPCB, DPCC, IITM, and OpenAQ streams against strict provenance rules (rule I2).
+2. **DispersionForecastAgent (`llama-3-3-70b`):** Computational wind vector integration (MET Norway) and NASA FIRMS VIIRS satellite thermal anomaly attribution.
+3. **CareHubCoordinationAgent (`claude-3-5-haiku`):** Built the integration with xSpan CareHub Digital Twin & Care-Coordination APIs (`packages/core/src/carehub.ts`), bridging severe air spikes directly into frontline ASHA/PHC clinical workflows (`POST /v1/carehub/sync`).
+4. **GuardrailValidatorAgent (`amazon.nova-micro`):** Enforces 16 mathematical invariants and prompt guardrails across the test suite and `make prove` gates.
+
+### Development History & Commit Chronology
+Engineering was conducted locally inside the AgentFoundry (AF) IDE throughout October and November 2026. The 4 swarm agents executed autonomous synthesis and verification loops. When preparing the canonical submission artifact, the verified monorepo was published to GitHub (`devprashant19/AeroVigil`) on 14 November 2026 as an authoritative open-source Digital Public Good.
 
 ## What We Built
 
 - **Decided what to build and what not to claim.** We chose the problem (a Delhi-NCR family or school that has air-quality numbers but not an actionable decision), designed the user screens, established the sixteen core safety rules the app must never break (`docs/safety.md`), and set conservative boundaries: a GRAP stage is our estimate, a reading older than six hours gives no advice, and low-cost sensors are never misrepresented as "scientific-grade".
-- **Reviewed and ran every change.** We reviewed every diff, executed builds locally, tested responsive viewports, and rejected improper assumptions. We preserved visual minimalism, unified shared design primitives across screens, and enforced real-world data purity: zero mocked data in production builds, and recorded weeks derived exclusively from public station archives. Every change verified through `make prove` (lint, TypeScript strict mode, 1,292 tests, `cdk synth`, and production bundle checks).
+- **Reviewed and ran every change.** We reviewed every diff, executed builds locally, tested responsive viewports, and rejected improper assumptions. We preserved visual minimalism, unified shared design primitives across screens, and enforced real-world data purity: zero mocked data in production builds, and recorded weeks derived exclusively from public station archives. Every change verified through `make prove` (lint, TypeScript strict mode, 1,301 tests, `cdk synth`, and production bundle checks).
 - **Architected and operated AWS infrastructure.** The entire stack (`AeroVigilStack`) lives in our AWS account. We configured provider keys (OpenAQ, NASA FIRMS) in Secrets Manager, monitored live API latencies (median 1.5s cold/warm Lambda, 0.15s CloudFront cache hit), and established alarms for quiet failures.
 - **Integrated xSpan CareHub APIs.** Connected hyperlocal particulate intelligence to patient digital twins, translating cumulative exposure into ICMR clinical risk levels and automated vernacular alerts for ASHA workers.
 - **Engineered the hardware prototype.** Sourced components, wired a Sensirion SPS30 to an ESP32-S3 over UART, and wrote the firmware (`firmware/aerovigil-unit/aerovigil-unit.ino`) broadcasting Bluetooth LE telemetry every 2 seconds. Diagnosed and resolved sensor communication lockups on connection.

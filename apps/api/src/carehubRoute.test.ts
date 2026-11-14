@@ -18,7 +18,11 @@ describe('POST /v1/carehub/sync', () => {
     });
 
     expect(res.statusCode).toBe(200);
-    const body = res.body as any;
+    const body = res.body as {
+      status: string;
+      digitalTwin: { clinicalAssessment: { riskLevel: string } };
+      careCoordinationAlert: { priority: string; vernacularSmsText: string };
+    };
     expect(body.status).toBe('success');
     expect(body.digitalTwin.clinicalAssessment.riskLevel).toBe('critical');
     expect(body.careCoordinationAlert).toBeDefined();

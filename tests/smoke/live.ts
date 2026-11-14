@@ -202,15 +202,15 @@ async function main(): Promise<void> {
 
   // Digital twin clinical integration endpoint: xSpan CareHub sync
   const carehub = await postJson('/v1/carehub/sync', { patientId: 'SMOKE-TEST', exposureUgM3: 50.0 });
-  const chData = carehub.body as { status?: string; synced?: boolean } | null;
+  const chData = (carehub.body ?? {}) as { status?: string; synced?: boolean };
   report(
     'carehub digital twin sync (/v1/carehub/sync)',
     carehub.status !== 200
       ? [`status ${carehub.status}`]
-      : chData?.status === 'success' && chData?.synced === true
+      : chData.status === 'success' && chData.synced === true
         ? []
         : ['carehub payload was not synced successfully'],
-    chData?.status ?? '',
+    chData.status ?? '',
   );
 
   // The assistant: one real question, and the ways it must say no.

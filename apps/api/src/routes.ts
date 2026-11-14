@@ -1,8 +1,9 @@
 import { DEMO_PLACES, type Mode } from '@aerovigil/contracts';
-import type { Clock } from '@aerovigil/core';
+import { type Clock, computeBacktestImpact } from '@aerovigil/core';
 import {
   countFires,
   NORTH_INDIA_BOX,
+  DEFAULT_BACKTEST_DATASETS,
   type FireDetection,
   type FireRepo,
   type ForecastRepo,
@@ -247,29 +248,41 @@ export function createRouter(deps: RouterDeps) {
               clock: deps.clock,
             });
       case '/v1/impact': {
-        if (request.method !== 'GET') {
-          return failure(405, 'method_not_allowed', `${request.method} is not supported here`);
-        }
         const asOf = deps.clock.now();
+        // Dynamically compute diurnal convective-shift backtest impact from station telemetry
+        let datasets = DEFAULT_BACKTEST_DATASETS;
+        if (deps.replayRepo !== undefined) {
+          try {
+            const parkSeries = await deps.replayRepo.series('W1', 'park');
+            if (parkSeries !== undefined) {
+              datasets = [
+                { name: parkSeries.station.name, hours: parkSeries.hours },
+              ];
+            }
+          } catch {
+            // fallback to bundled historical Delhi CAAQMS datasets
+          }
+        }
+        const computed = computeBacktestImpact(datasets);
         return okCached(
           {
             schemaVersion: 1,
             asOf,
+            as_of: asOf,
+            station_days: computed.stationDaysAnalyzed,
+            avg_reduction_pct: computed.averageInhalationReductionPct,
+            no_clean_window_pct: computed.noCleanWindowDaysPct,
             centralOutcome: 'Same walk, 42.0% less PM2.5 inhalation',
             methodology: 'Convective boundary-layer diurnal shift (morning inversion rush hour 07:00-08:00 vs dynamic cleanest daylight hour)',
             backtestSummary: {
-              stationDaysAnalyzed: 13,
-              stationsAnalyzed: [
-                'Delhi - Anand Vihar (DPCC)',
-                'Delhi - Lodhi Road (IMD)',
-                'Delhi - IGI Airport Terminal 3 (CPCB)',
-                'Delhi - Talkatora Garden (DPCC)',
-              ],
-              averageInhalationReductionPct: 42.0,
-              maxInhalationReductionPct: 61.0,
-              noCleanWindowDaysPct: 7.7,
-              noCleanWindowEnforcedVerdict: 'STAY_INDOORS',
+              stationDaysAnalyzed: computed.stationDaysAnalyzed,
+              stationsAnalyzed: datasets.map((d) => d.name),
+              averageInhalationReductionPct: computed.averageInhalationReductionPct,
+              maxInhalationReductionPct: computed.maxInhalationReductionPct,
+              noCleanWindowDaysPct: computed.noCleanWindowDaysPct,
+              noCleanWindowEnforcedVerdict: computed.noCleanWindowEnforcedVerdict,
             },
+            dailyBreakdown: computed.dailyBreakdown,
             provenance: {
               sourceCode: 'scripts/backtest-outcomes.mjs',
               dossier: 'docs/BACKTEST_OUTCOMES.md',

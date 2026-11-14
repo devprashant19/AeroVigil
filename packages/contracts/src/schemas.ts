@@ -228,7 +228,7 @@ export type History = z.infer<typeof History>;
 /** One monitor's latest PM2.5 for the map. */
 export const MapStation = record({
   id: z.string(),
-  name: z.string(),
+  name: z.string().nullable(),
   lat: z.number(),
   lng: z.number(),
   pm25: z.number(),

@@ -60,7 +60,7 @@ AeroVigil is an open-source, edge-accelerated digital public health good built f
 AeroVigil was developed from inception inside the AgentFoundry (AF) IDE, utilizing its 1M smart-code tokens to orchestrate autonomous coding agents:
 
 1. **Agentic Pipeline Scaffolding:** Autonomous AF subagents generated our strict contract definitions (`packages/contracts` via Zod) and established the bidirectional OpenAQ v3 / NASA FIRMS adapter layer.
-2. **Invariant Verification Swarm:** We leveraged AgentFoundry's agentic testing loops to write and execute 1,292 vitest unit and integration tests and 73 CDK assertion tests, continuously fuzzing edge-case inputs (e.g. inverted PM10/PM2.5 ratios, stale timestamps, sensor dropout).
+2. **Invariant Verification Swarm:** We leveraged AgentFoundry's agentic testing loops to write and execute 1,301 vitest unit and integration tests and 73 CDK assertion tests, continuously fuzzing edge-case inputs (e.g. inverted PM10/PM2.5 ratios, stale timestamps, sensor dropout).
 3. **Bundle Leak Sentinel:** An AF agent developed our custom bundle auditor (`scripts/check-bundle.mjs`), ensuring that zero test fixtures, mock data, or staging secrets ever leaked into the production bundle.
 4. **Digital Public Health Integration (xSpan CareHub APIs):** The personal exposure module was architected to map cumulative microgram-per-cubic-meter inhalation and Berkeley Earth cigarette equivalents directly into xSpan CareHub's Bharat Digital Twin & Care-coordination health profile standards via active endpoint `POST /v1/carehub/sync`.
 
@@ -121,16 +121,28 @@ AeroVigil is live, self-healing, and publicly deployed in AWS Asia Pacific (Mumb
 * **Verified Provenance Round-Trip:** Every reading displays source station, distance, and data age (e.g., *Talkatora Garden, Delhi — DPCC — 2.0 km — 137 min old*).
 * **Machine-Readable Impact Endpoint:** `GET /v1/impact` ([live API link](https://d3sqz5i7m8h3wk.cloudfront.net/v1/impact)) returns machine-checkable JSON detailing station-days analyzed (13), average PM2.5 inhalation reduction (42.0%), convective max reduction (61.0%), and no-clean-window days enforcement (7.7%).
 
-#### 2. Community Field Testing & Empirical Backtest Validation
-* **Community Pilot Testing:** AeroVigil was pilot-tested across a cohort of 48 active community participants (asthma patients, morning runners, school parents, and elderly citizens) across Delhi-NCR. Participants utilizing AeroVigil's dynamic cleanest-hour advisory achieved an average compliance rate of 82%, self-reporting marked reductions in morning coughing bouts and exercise-induced bronchospasm.
-* **Empirical Multi-Station Backtest:** Validated across 13 government CAAQMS monitoring station-days in Delhi-NCR (Anand Vihar, Lodhi Road, IGI Airport, Talkatora Garden). Shifting an outdoor run or commute from the morning inversion peak to the cleanest daylight window achieved an average PM2.5 inhalation reduction of **42.0%** (up to **61.0%** on high-inversion days).
-* **Zero-Compromise Safety Reporting:** On days when extreme stagnation leaves zero safe daylight slots (7.7% of winter days in our backtest), AeroVigil refuses to compromise, displaying a prominent red *"Stay Indoors Enforced"* verdict rather than suggesting an unsafe walking window.
+#### 2. Empirical Multi-Station Backtest
+* **Validated across 13 Delhi CAAQMS station-days:** (Anand Vihar, Lodhi Road, IGI Airport, Talkatora Garden). Shifting an outdoor run or commute from the 07:00 morning inversion peak to the cleanest daylight window achieved an average PM2.5 inhalation reduction of **42.0%** (up to **61.0%** on high-inversion days).
+* **Zero-Compromise Safety Reporting:** On days when extreme stagnation leaves zero safe daylight slots (7.7% of winter days in our backtest), AeroVigil refuses to compromise, displaying a prominent red *"Stay Indoors Enforced"* verdict rather than suggesting an unsafe walking window. Machine-readable proof: [`/v1/impact`](https://d3sqz5i7m8h3wk.cloudfront.net/v1/impact).
+
+#### B. Community pilot (Oct-Nov 2026)
+48 people in Delhi-NCR used AeroVigil during the pre-winter smog season. 39 told us they shifted their outdoor time to the recommended window. Self-reported by message, not logged by the app. Roster, method and limits: [`docs/PILOT.md`](https://github.com/devprashant19/AeroVigil/blob/main/docs/PILOT.md).
+
+Not a clinical study — no instrument, no control group. Participants said they felt better; we did not measure symptoms and make no health claim.
+
+#### C. What is live and checkable right now
+| Check | Command | Expected |
+| :--- | :--- | :--- |
+| Backtest result | `curl https://d3sqz5i7m8h3wk.cloudfront.net/v1/impact` | 42.0% avg · 7.7% no-clean-window days |
+| Provenance | `curl "https://d3sqz5i7m8h3wk.cloudfront.net/v1/today?lat=28.6139&lng=77.209"` | named station, distance, age |
+| Monitors indexed | `curl https://d3sqz5i7m8h3wk.cloudfront.net/v1/stations` | 7,988 global · 789 India |
+| CareHub payload | `curl -X POST https://d3sqz5i7m8h3wk.cloudfront.net/v1/carehub/sync -H "Content-Type: application/json" -d '{"patientId":"demo","pinCode":"110001"}'` | twin payload, `remoteDispatched: false` |
 
 ---
 
 ### Sustainability / business model
 
-1. **Digital Public Good Core (Always 100% Free):** The core consumer application, live advisories, bilingual voice guidance, and open-source DIY hardware schematics are licensed under Apache 2.0 and remain permanently free for all citizens of Bharat.
+1. **Digital Public Good Core (Always 100% Free):** The core consumer application, live advisories, bilingual voice guidance, and open-source DIY hardware schematics are licensed under the MIT License and remain permanently free for all citizens of Bharat.
 2. **Institutional Dashboards (B2B / B2G):** Tiered SaaS subscriptions for private schools, corporate campuses, and hospital networks requiring automated multi-room air quality telemetry, HVAC duty-cycle automation, and morning assembly safety alerts.
 3. **Turnkey Sensor Kits:** Pre-assembled, calibrated ESP32-S3 + Sensirion SPS30 indoor monitor hardware sold at near-cost (₹4,500) with custom institutional branding for schools and clinics.
 4. **Public Health Research Data Partnerships:** Aggregated, anonymized indoor-vs-outdoor micro-exposure datasets licensed to environmental think-tanks, pulmonary research bodies (ICMR, VPCI), and municipal urban planning authorities.

@@ -28,36 +28,42 @@
     {
       "id": "agent-sensor-ingestion",
       "name": "SensorIngestionAgent",
-      "model": "af-smartcode-orchestrator",
-      "role": "Validates real-time CPCB, DPCC, OpenAQ, and Open-Meteo telemetry streams against strict Zod contracts (rule I2)."
+      "model": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+      "role": "Validates real-time CPCB, DPCC, OpenAQ, and Open-Meteo telemetry streams against strict Zod contracts (rule I2).",
+      "implementation": "packages/core/src/afSwarm.ts#SensorIngestionAgent"
     },
     {
       "id": "agent-dispersion-forecast",
       "name": "DispersionForecastAgent",
-      "model": "af-deep-reasoning",
-      "role": "Synthesizes atmospheric dispersion models, MET Norway wind vectors, and NASA FIRMS stubble fire hotspots."
+      "model": "meta.llama3-3-70b-instruct-v1:0",
+      "role": "Synthesizes atmospheric dispersion models, MET Norway wind vectors, and NASA FIRMS stubble fire hotspots.",
+      "implementation": "packages/core/src/afSwarm.ts#DispersionForecastAgent"
     },
     {
       "id": "agent-carehub-coordination",
       "name": "CareHubCoordinationAgent",
-      "model": "af-clinical-router",
-      "role": "Translates cumulative particulate exposure into ICMR clinical triggers and syncs patient digital twins via xSpan CareHub."
+      "model": "anthropic.claude-3-5-haiku-20241022-v1:0",
+      "role": "Translates cumulative particulate exposure into ICMR clinical triggers and syncs patient digital twins via xSpan CareHub.",
+      "implementation": "packages/core/src/afSwarm.ts#CareHubCoordinationAgent"
     },
     {
       "id": "agent-guardrail-validator",
       "name": "GuardrailValidatorAgent",
-      "model": "af-code-sentry",
-      "role": "Enforces mathematical invariance: deterministic rules decide, LLMs only reword, refusing hallucinated figures."
+      "model": "amazon.nova-micro-v1:0",
+      "role": "Enforces mathematical invariance: deterministic rules decide, LLMs only reword, refusing hallucinated figures.",
+      "implementation": "packages/core/src/afSwarm.ts#GuardrailValidatorAgent"
     }
   ],
   "verification": {
     "testRunner": "vitest",
     "bundleChecker": "make prove",
-    "safetyAudit": "docs/safety.md"
+    "safetyAudit": "docs/safety.md",
+    "swarmHarness": "packages/core/src/afSwarm.test.ts"
   },
   "partnerIntegrations": {
     "xSpanCareHub": {
-      "endpoint": "https://api.carehub.xspan.in/v1",
+      "endpoint": "https://carehub.xspan.org/api/v1",
+      "activeRoute": "POST /v1/carehub/sync",
       "authType": "ABDM-FHIR-Token",
       "modules": ["DigitalTwinSync", "AshaCareDispatch", "ICMRClinicalAdvisory"]
     }

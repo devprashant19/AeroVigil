@@ -41,7 +41,7 @@ export function monitorsFromStations(
 ): readonly Monitor[] {
   return stations.map((s) => ({
     id: s.id,
-    name: s.name,
+    name: s.name ?? 'Unnamed monitor',
     lat: s.lat,
     lng: s.lng,
     pm25: s.pm25,

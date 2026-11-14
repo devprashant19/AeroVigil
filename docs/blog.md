@@ -88,7 +88,7 @@ _Scene 2 of the animated architecture: a person asks for the air at a place._
 
 The AWS open source I used is AWS CDK and Powertools for AWS Lambda (Logger and Tracer). CDK assertion tests turn safety rules into failing builds: every Lambda on arm64, no function time limit over 2 minutes, buckets block public access, and only the account route behind a token.
 
-Also deployed and tested: an AWS Step Functions alert loop that waits for a tap. The whole repository runs 1,285 automated tests, plus lint, types and `cdk synth`, in one command.
+Also deployed and tested: an AWS Step Functions alert loop that waits for a tap. The whole repository runs 1,301 automated tests, plus lint, types and `cdk synth`, in one command.
 
 ## The room: a measuring unit and a cleaner
 
